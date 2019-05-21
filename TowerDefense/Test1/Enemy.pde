@@ -1,11 +1,22 @@
 class Enemy extends Thing {
   int value, health;
-  float xspeed, yspeed;
+  float speed, xDir, yDir;
   
   Enemy(float x, float y) {
     super(x,y);
     size = 30;
-    xspeed = 5;
-    yspeed = 5;
+    speed = 5;
+    xDir = 1;
+    yDir = 1;
+  }
+  
+  void display() {
+    fill(255,0,0);
+    ellipse(x,y,size,size);
+  }
+  
+  void move() {
+    x += 1;
+    y += 1;
   }
 }
