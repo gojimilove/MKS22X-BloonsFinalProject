@@ -2,7 +2,7 @@ class Enemy extends Thing {
   int value, health;
   float speed, xDir, yDir;
   
-  Enemy(float x, float y) {
+  Enemy(int x, int y) {
     super(x,y);
     size = 30;
     speed = 5;
