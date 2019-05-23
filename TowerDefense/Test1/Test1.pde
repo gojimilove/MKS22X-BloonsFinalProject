@@ -33,7 +33,7 @@ class Tile extends Thing {
     super(x, y);
     size = s;
     direction = d;
-    col = color(0,0,255);
+    col = c;
     ID = i;
   }
 
@@ -66,8 +66,6 @@ class Map implements Displayable {
       x += 50;
     }
 
-
-
     try {
       line = reader.readLine();
     } 
@@ -79,13 +77,13 @@ class Map implements Displayable {
       int r = 0;
       //while (r < 53) {
         String[] parts = split(line, ",");
-        //x = Integer.parseInt(parts[0]) * 50;
-        //y = Integer.parseInt(parts[1]) * 50;
-        //g = Integer.parseInt(parts[2]);
-        x = 5;
-        y = 5;
-        g = 1;
-        board[x][y] = new Tile(x, y, 50, 'n', color(255,0,0), g);
+        x = Integer.parseInt(parts[0]);
+        y = Integer.parseInt(parts[1]);
+        g = Integer.parseInt(parts[2]);
+        //x = 17;
+        //y = 11;
+        //g = 1;
+        board[x][y] = new Tile(x*50, y*50, 50, 'n', color(255,0,0), g);
       //}
     }
 
