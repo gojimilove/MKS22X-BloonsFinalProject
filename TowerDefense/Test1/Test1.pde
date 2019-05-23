@@ -41,6 +41,18 @@ class Tile extends Thing {
     fill(col);
     rect(x, y, size, size);
   }
+  
+  int getID() {
+    return ID;
+  }
+  
+  int getX() {
+    return x;
+  }
+  
+  int getY() {
+    return y;
+  }
 }
 
 BufferedReader reader;
@@ -48,7 +60,7 @@ String line;
 
 class Map implements Displayable {
   Tile[][] board;
-  int[][] path;
+  Tile[] path;
 
 
   Map() {
@@ -56,7 +68,7 @@ class Map implements Displayable {
     int y = 0;
     int g = 0;
     board = new Tile[18][12];
-    path = new int[18][12];
+    path = new Tile[53];
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board[i].length; j++) {
         board[i][j] = new Tile(x, y, 50, 'n', color(0, 255, 0), -1);
@@ -131,6 +143,7 @@ class Map implements Displayable {
         //y = 11;
         //g = 1;
         board[x][y] = new Tile(x*50, y*50, 50, 'n', color(180), g);
+        path[r] = new Tile(x*50, y*50, 50, 'n', color(180), g);
         r++;
       }
     }
@@ -147,16 +160,33 @@ class Map implements Displayable {
       }
     }
   }
+  
+  Tile getTile(int r,int c) {
+    return board[r][c];
+  }
+  
+  Tile[] getPath() {
+    return path;
+  }
 }
 
+
+
+Map test;
+Enemy e;
 
 void setup() {
   size(900, 600);
-  background(255);
   reader = createReader("map.txt");
-  Map test = new Map();
-  test.display();
+  test = new Map();
+  e = new Enemy(0,125,test.getPath());
 }
 
+
 void draw() {
+  background(255);
+  test.display();
+  //test.display();
+  e.display();
+  e.move();
 }
