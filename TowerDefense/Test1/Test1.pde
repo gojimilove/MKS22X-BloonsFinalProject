@@ -78,7 +78,7 @@ class Map implements Displayable {
           //x = 17;
           //y = 11;
           //g = 1;
-          board[x][y] = new Tile(x*50, y*50, 50, 'n', color(255, 0, 0), g);
+          board[x][y] = new Tile(x*50, y*50, 50, 'n', color(180), g);
           r++;
         }
       //}
