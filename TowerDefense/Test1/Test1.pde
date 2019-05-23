@@ -67,85 +67,84 @@ class Map implements Displayable {
     }
 
     try {
-      line = reader.readLine();
-    } 
+      //if (line != null) {
+        int r = 0;
+        while (r < 53) {
+          line = reader.readLine();
+          String[] parts = split(line, ",");
+          x = Integer.parseInt(parts[1]);
+          y = Integer.parseInt(parts[0]);
+          g = Integer.parseInt(parts[2]);
+          //x = 17;
+          //y = 11;
+          //g = 1;
+          board[x][y] = new Tile(x*50, y*50, 50, 'n', color(255, 0, 0), g);
+          r++;
+        }
+      //}
+    }
     catch (IOException e) {
       e.printStackTrace();
       line = null;
     }
-    if (line != null) {
-      int r = 0;
-      //while (r < 53) {
-        String[] parts = split(line, ",");
-        x = Integer.parseInt(parts[0]);
-        y = Integer.parseInt(parts[1]);
-        g = Integer.parseInt(parts[2]);
-        //x = 17;
-        //y = 11;
-        //g = 1;
-        board[x][y] = new Tile(x*50, y*50, 50, 'n', color(255,0,0), g);
-      //}
-    }
-
-      //try {
-      //  //File text = new File("map.txt");
-      //  //Scanner s = new Scanner(text);
-      //  //int r = 0;
-      //  //while (r < 53 && s.hasNextLine()) {
-      //  //  String lineS = s.nextLine();
-      //  //  String[] parts = lineS.split(",");
-      //  //  x = Integer.parseInt(parts[0]) * 50;
-      //  //  y = Integer.parseInt(parts[1]) * 50;
-      //  //  g = Integer.parseInt(parts[2]);
-      //  //  board[x][y] = new Tile(x, y, 50, 'n', color(180), g);
-      //  //  r++;
-      //  //}
-      //  //s.close();
-      //}
-      //catch (FileNotFoundException e) {
-      //  System.out.println("The file was not found!") ;
-      //  e.printStackTrace();
-      //}
-      //catch (Exception e) {
-      //  System.out.println("An exception has occured") ;
-      //}
+    //try {
+    //  //File text = new File("map.txt");
+    //  //Scanner s = new Scanner(text);
+    //  //int r = 0;
+    //  //while (r < 53 && s.hasNextLine()) {
+    //  //  String lineS = s.nextLine();
+    //  //  String[] parts = lineS.split(",");
+    //  //  x = Integer.parseInt(parts[0]) * 50;
+    //  //  y = Integer.parseInt(parts[1]) * 50;
+    //  //  g = Integer.parseInt(parts[2]);
+    //  //  board[x][y] = new Tile(x, y, 50, 'n', color(180), g);
+    //  //  r++;
+    //  //}
+    //  //s.close();
+    //}
+    //catch (FileNotFoundException e) {
+    //  System.out.println("The file was not found!") ;
+    //  e.printStackTrace();
+    //}
+    //catch (Exception e) {
+    //  System.out.println("An exception has occured") ;
+    //}
 
 
 
-      //for (int i = 0; i < board.length; i++) {
-      //  for (int j = 0; j < board[i].length; j++) {
-      //    color c = color(0,255,0);
-      //    char d = 'n';
-      //    if (j == 5) {
-      //      c = color(180);
-      //      d = 'd';
-      //    }
-      //    board[i][j] = new Tile(x, y, 50, d, c, g);
-      //    y+=50;
-      //  }
-      //  y = 0;
-      //  x+=50;
-      //}
-    }
+    //for (int i = 0; i < board.length; i++) {
+    //  for (int j = 0; j < board[i].length; j++) {
+    //    color c = color(0,255,0);
+    //    char d = 'n';
+    //    if (j == 5) {
+    //      c = color(180);
+    //      d = 'd';
+    //    }
+    //    board[i][j] = new Tile(x, y, 50, d, c, g);
+    //    y+=50;
+    //  }
+    //  y = 0;
+    //  x+=50;
+    //}
+  }
 
-    void display() {
-      for (int i = 0; i < board.length; i++) {
-        for (int j = 0; j < board[i].length; j++) {
-          board[i][j].display();
-        }
+  void display() {
+    for (int i = 0; i < board.length; i++) {
+      for (int j = 0; j < board[i].length; j++) {
+        board[i][j].display();
       }
     }
   }
+}
 
 
-  void setup() {
-    size(900, 600);
-    background(255);
-    reader = createReader("map.txt");
-    Map test = new Map();
-    test.display();
-  }
+void setup() {
+  size(900, 600);
+  background(255);
+  reader = createReader("map.txt");
+  Map test = new Map();
+  test.display();
+}
 
-  void draw() {
-    
-  }
+void draw() {
+}
