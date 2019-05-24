@@ -20,6 +20,7 @@ class Enemy extends Thing {
 
   void move() {
     if (index < 52) {
+      if (x >= path[index+1].getX() || y >= path[index+1].getY()) index++;
       //print("current pos: "+x+", "+y+"    next tile: "+path[index+1].getX()+", "+path[index+1].getY());
       if (path[index++].getX()+25 > x) {
         x+=.0000000000001;
