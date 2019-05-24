@@ -4,18 +4,20 @@ class Enemy extends Thing {
   float speed, xDir, yDir;
 
   Enemy(int x, int y, Tile[] p) {
-    super(x, y);
+    super(x,y);
+     path = p;
+    x = path[0].getX();
+    y = path[0].getY();
     size = 30;
     speed = 5;
     xDir = 1;
     yDir = 1;
-    path = p;
     index = 0;
   }
 
   void display() {
     fill(255, 0, 0);
-    ellipse(path[index].getX(), path[index].getY()+25, size, size);
+    ellipse(x, y, size, size);
   }
 
   void move() {
