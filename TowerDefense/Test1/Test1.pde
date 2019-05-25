@@ -179,7 +179,7 @@ void setup() {
   size(900, 600);
   reader = createReader("map.txt");
   test = new Map();
-  e = new Enemy(0,125,test.getPath());
+  e = new Enemy(25,125,test.getPath(),1);
 }
 
 
