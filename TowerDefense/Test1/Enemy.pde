@@ -6,8 +6,6 @@ class Enemy extends Thing {
   Enemy(int x, int y, Tile[] p, float s) {
     super(x, y);
     path = p;
-    x = path[0].getX();
-    y = path[0].getY();
     size = 30;
     speed = s;
     xDir = 1;
@@ -42,6 +40,9 @@ class Enemy extends Thing {
         index+=1;
         help = 0;
       }
+    }
+    else {
+      x-=speed;
     }
   }
 }
