@@ -170,7 +170,16 @@ class Map implements Displayable {
   }
 }
 
-
+void spawn() {
+  int s = millis()%1000;
+  if (s % 100 == 0) {
+    Enemy e = new Enemy(25, 125, test.getPath(), 1);
+    enemies.add(e);
+  }
+  fill(0,0,0);
+  text(("Time: "+s), 10, 20);
+  text(("Enemies: "+enemies.size()), 10, 50);
+}
 
 Map test;
 ArrayList<Enemy> enemies;
@@ -181,14 +190,13 @@ void setup() {
   reader = createReader("map.txt");
   test = new Map();
   enemies = new ArrayList<Enemy>();
-  Enemy e = new Enemy(25, 125, test.getPath(), 5);
-  enemies.add(e);
 }
 
 void draw() {
   background(255);
   test.display();
   //test.display();
+  spawn();
   for (int i = 0; i < enemies.size(); i++) {
     if (enemies.get(i).isAlive == false) enemies.remove(i);
   }
