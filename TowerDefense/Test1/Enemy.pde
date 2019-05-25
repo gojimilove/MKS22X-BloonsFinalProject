@@ -2,6 +2,7 @@ class Enemy extends Thing {
   Tile[] path;
   int value, health, index;
   float speed, xDir, yDir;
+  boolean isAlive;
 
   Enemy(int x, int y, Tile[] p, float s) {
     super(x, y);
@@ -11,15 +12,17 @@ class Enemy extends Thing {
     xDir = 1;
     yDir = 1;
     index = 0;
+    isAlive = true;
   }
 
   void display() {
- 
     fill(255, 0, 0);
     ellipse(x, y, size, size);
     fill(255);
     //text(("help: "+help+"\ncurrent pos: "+x+", "+y+"\nnext tile: "+path[index+1].getX()+", "+path[index+1].getY()),x-5,y-5);
   }
+  
+  
   int help = 0;
   void move() {
     if (index < 52) {
@@ -42,7 +45,7 @@ class Enemy extends Thing {
       }
     }
     else {
-      x-=speed;
+      isAlive = false;
     }
   }
 }

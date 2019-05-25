@@ -41,15 +41,15 @@ class Tile extends Thing {
     fill(col);
     rect(x, y, size, size);
   }
-  
+
   int getID() {
     return ID;
   }
-  
+
   int getX() {
     return x;
   }
-  
+
   int getY() {
     return y;
   }
@@ -160,11 +160,11 @@ class Map implements Displayable {
       }
     }
   }
-  
-  Tile getTile(int r,int c) {
+
+  Tile getTile(int r, int c) {
     return board[r][c];
   }
-  
+
   Tile[] getPath() {
     return path;
   }
@@ -173,20 +173,27 @@ class Map implements Displayable {
 
 
 Map test;
-Enemy e;
+ArrayList<Enemy> enemies;
+//Enemy e;
 
 void setup() {
   size(900, 600);
   reader = createReader("map.txt");
   test = new Map();
-  e = new Enemy(25,125,test.getPath(),1);
+  enemies = new ArrayList<Enemy>();
+  Enemy e = new Enemy(25, 125, test.getPath(), 5);
+  enemies.add(e);
 }
-
 
 void draw() {
   background(255);
   test.display();
   //test.display();
-  e.display();
-  e.move();
+  for (int i = 0; i < enemies.size(); i++) {
+    if (enemies.get(i).isAlive == false) enemies.remove(i);
+  }
+  for (Enemy e : enemies) {
+    e.display();
+    e.move();
+  }
 }
