@@ -176,24 +176,39 @@ void spawn() {
   if (s == 50) { //if divisible by 100, add an enemy to the list
     Enemy e = new Enemy(25, 125, test.getPath(), 2);
     enemies.add(e);
-  }
-  
+  } 
+}
+
+void mouseClicked() {
+  Tower t = new Tower(mouseX, mouseY);
+  towers.add(t);;
 }
 
 Map test;
 ArrayList<Enemy> enemies;
+ArrayList<Tower> towers;
+//Tower t;
 //Enemy e;
 
 void setup() {
-  size(900, 600);
+  size(1100, 600);
   reader = createReader("map.txt");
   test = new Map();
   enemies = new ArrayList<Enemy>();
+  //t = new Tower(1000, 100);
+  towers = new ArrayList<Tower>();
 }
-
+float x, y;
 void draw() {
   background(255);
   test.display();
+  fill(255);
+  //t.display();
+  for (Tower t : towers) {
+    t.display();
+  }
+  //fill(0);
+  //rect(x, y, 50, 50);
   fill(0, 0, 0);
   text(("Time: "+(millis()%100)), 10, 20);
   text(("Enemies: "+enemies.size()), 10, 50);
