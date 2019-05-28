@@ -77,6 +77,7 @@ class Map implements Displayable {
       y = 0;
       x += 50;
     }
+    //hard coding the board (path)
     //board[0][2] = new Tile(0, 100, 50, 'n', color(180, 180, 180), 1);
     //board[1][2] = new Tile(50, 100, 50, 'n', color(180, 180, 180), 2);
     //board[2][2] = new Tile(100, 100, 50, 'n', color(180, 180, 180), 3);
@@ -171,14 +172,12 @@ class Map implements Displayable {
 }
 
 void spawn() {
-  int s = millis()%1000;
-  if (s % 100 == 0) {
-    Enemy e = new Enemy(25, 125, test.getPath(), 1);
+  int s = millis()%100; //counts up to 100 and starts over
+  if (s == 50) { //if divisible by 100, add an enemy to the list
+    Enemy e = new Enemy(25, 125, test.getPath(), 2);
     enemies.add(e);
   }
-  fill(0,0,0);
-  text(("Time: "+s), 10, 20);
-  text(("Enemies: "+enemies.size()), 10, 50);
+  
 }
 
 Map test;
@@ -195,9 +194,13 @@ void setup() {
 void draw() {
   background(255);
   test.display();
-  //test.display();
-  spawn();
-  for (int i = 0; i < enemies.size(); i++) {
+  fill(0, 0, 0);
+  text(("Time: "+(millis()%100)), 10, 20);
+  text(("Enemies: "+enemies.size()), 10, 50);
+  if (enemies.size() < 20) { //limit to # of enemies on board at once
+    spawn();
+  }
+  for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
     if (enemies.get(i).isAlive == false) enemies.remove(i);
   }
   for (Enemy e : enemies) {
