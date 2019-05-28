@@ -170,18 +170,25 @@ class Map implements Displayable {
     return path;
   }
 }
-
+int s = 0;
 void spawn() {
-  int s = millis()%100; //counts up to 100 and starts over
-  if (s == 50) { //if divisible by 100, add an enemy to the list
+  //int s = millis()%100; //counts up to 100 and starts over
+  s = s + 3;
+  if (s == 60) { //if divisible by 100, add an enemy to the list
     Enemy e = new Enemy(25, 125, test.getPath(), 2);
     enemies.add(e);
+<<<<<<< HEAD
   } 
 }
 
 void mouseClicked() {
   Tower t = new Tower(mouseX, mouseY);
   towers.add(t);;
+=======
+    s = 0;
+  }
+  
+>>>>>>> 454d6f6d0ec2e26cd1b602beb5118395c0a95e15
 }
 
 Map test;
