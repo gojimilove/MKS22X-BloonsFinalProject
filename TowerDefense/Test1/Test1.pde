@@ -28,6 +28,7 @@ class Tile extends Thing {
   char direction; //n is no direction, w a s d are up left down right 
   color col;
   int ID;
+  boolean hasTower;
 
   Tile(int x, int y, int s, char d, color c, int i) {
     super(x, y);
@@ -35,6 +36,7 @@ class Tile extends Thing {
     direction = d;
     col = c;
     ID = i;
+    hasTower = false;
   }
 
   void display() {
@@ -52,6 +54,10 @@ class Tile extends Thing {
 
   int getY() {
     return y;
+  }
+  
+  boolean hasTower() {
+    return hasTower;
   }
 }
 
