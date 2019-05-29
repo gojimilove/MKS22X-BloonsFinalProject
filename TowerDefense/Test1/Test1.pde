@@ -169,6 +169,10 @@ class Map implements Displayable {
   Tile[] getPath() {
     return path;
   }
+  
+  Tile[][] getBoard() {
+    return board;
+  }
 }
 int s = 0;
 void spawn() {
@@ -182,7 +186,7 @@ void spawn() {
 
 void mouseClicked() {
   Tower t = new Tower(mouseX, mouseY);
-  towers.add(t);;
+  towers.add(t);
 }
 
 Map test;
@@ -199,14 +203,14 @@ void setup() {
   //t = new Tower(1000, 100);
   towers = new ArrayList<Tower>();
 }
-float x, y;
+
 void draw() {
   background(255);
   test.display();
   fill(255);
   //t.display();
   for (Tower t : towers) {
-    t.display();
+    t.display(test.getBoard());
   }
   //fill(0);
   //rect(x, y, 50, 50);
