@@ -185,7 +185,7 @@ void spawn() {
 }
 
 void mouseClicked() {
-  Tower t = new Tower(mouseX, mouseY);
+  DartTower t = new DartTower(mouseX, mouseY);
   towers.add(t);
 }
 
