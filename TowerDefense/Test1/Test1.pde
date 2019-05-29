@@ -197,8 +197,8 @@ void mouseClicked() {
 
 Map test;
 ArrayList<Enemy> enemies;
-ArrayList<Tower> towers;
-//Tower t;
+ArrayList<DartTower> towers;
+Tower tow;
 //Enemy e;
 
 void setup() {
@@ -206,21 +206,22 @@ void setup() {
   reader = createReader("map.txt");
   test = new Map();
   enemies = new ArrayList<Enemy>();
-  //t = new Tower(1000, 100);
-  towers = new ArrayList<Tower>();
+  tow = new Tower(920, 50);
+  towers = new ArrayList<DartTower>();
 }
 
 void draw() {
   background(255);
   test.display();
   fill(255);
-  //t.display();
-  for (Tower t : towers) {
+  tow.display();
+  for (DartTower t : towers) {
     t.display(test.getBoard());
   }
   //fill(0);
   //rect(x, y, 50, 50);
   fill(0, 0, 0);
+  textSize(12);
   text(("Time: "+(millis()%100)), 10, 20);
   text(("Enemies: "+enemies.size()), 10, 50);
   if (enemies.size() < 20) { //limit to # of enemies on board at once
