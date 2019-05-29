@@ -55,7 +55,7 @@ class DartTower extends Tower {
         }
       }
     }
-    if (id == -1) {
+    if (id == -1 && x < 900 && x >= 0 && y < 600 && y >= 0) {
       fill(0);
       image(img, x, y, 50, 50);
       fill(255);
