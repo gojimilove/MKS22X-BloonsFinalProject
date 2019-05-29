@@ -1,3 +1,6 @@
+PVector towerPos;
+PVector enemyPos;
+ArrayList<Dart> darts = new ArrayList<Dart>();
 class Tower extends Thing {
   int value, damage, level;
   float speed, range;
@@ -5,6 +8,7 @@ class Tower extends Thing {
 
   Tower(int x, int y) {
     super(x, y);
+    towerPos = new PVector(x,y);
   }
   void display() {
     fill(0);
@@ -38,6 +42,7 @@ class DartTower extends Tower {
   DartTower(int x, int y) {
     super(x, y);
     img = loadImage("Dart_Monkey.png");
+    range = 300;
   }
   
   void display() {
@@ -61,5 +66,21 @@ class DartTower extends Tower {
       fill(255);
       text("X: "+x+"\nY: "+y, x, y+10);
     }
+  }
+}
+
+class Dart {
+  PVector Pos = new PVector();
+  PVector target = new PVector();
+  int speed = 2;
+  int size = 10;
+  PVector velocity;
+  
+  Dart(int x1, int y1, int x2, int y2){
+    Pos.set(x1,y1);
+    target.set(x2,y2);
+    
+    velocity = PVector.sub(target,Pos);
+    velocity.setMag(speed);
   }
 }
