@@ -195,8 +195,15 @@ void spawnT(int xT, int yT) {
   towers.add(t);
 }
 
+void removeT(int xT, int yT) {
+  for (int i = 0; i < towers.size(); i++) {
+    if (xT >= towers.get(i).x && xT < towers.get(i).x+50 && yT >= towers.get(i).y && yT < towers.get(i).y+50) towers.remove(i);
+  }
+}
+
 void mouseClicked() {
   if (mouseButton == LEFT) spawnT(mouseX, mouseY);
+  else if (mouseButton == RIGHT) removeT(mouseX, mouseY);
   
 }
 
