@@ -1,7 +1,5 @@
 
-PVector towerPos;
-PVector enemyPos;
-ArrayList<Dart> darts = new ArrayList<Dart>();
+
 String[] types = new String[]{"Dart_Monkey.png", "Tack_Shooter.png"};
 class Tower extends Thing {
   int value, damage, level;
@@ -58,23 +56,30 @@ class DartTower extends Tower {
       text("X: "+x+"\nY: "+y, x, y+10);
     }
   }
-<<<<<<< HEAD
 }
 
 class Dart {
   PVector Pos = new PVector();
   PVector target = new PVector();
-  int speed = 2;
+  float speed = 2;
   int size = 10;
   PVector velocity;
   
-  Dart(int x1, int y1, int x2, int y2){
+  Dart(float x1, float y1, float x2, float y2){
     Pos.set(x1,y1);
     target.set(x2,y2);
     
     velocity = PVector.sub(target,Pos);
     velocity.setMag(speed);
   }
-=======
->>>>>>> c21a67bce9649bc2393223cd13744e4de78c8ab0
+    void update() {
+    Pos.add(velocity);
+    float angle = velocity.heading();
+    pushMatrix();
+    translate(Pos.x,Pos.y);
+    rotate(angle);
+    stroke(0);
+    line(0,0,size,0);
+    popMatrix();
+  }
 }

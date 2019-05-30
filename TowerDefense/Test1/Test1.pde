@@ -55,7 +55,7 @@ class Tile extends Thing {
   int getY() {
     return y;
   }
-  
+
   boolean hasTower() {
     return hasTower;
   }
@@ -175,7 +175,7 @@ class Map implements Displayable {
   Tile[] getPath() {
     return path;
   }
-  
+
   Tile[][] getBoard() {
     return board;
   }
@@ -187,7 +187,7 @@ void spawn() {
   if (s % 60 == 0) { //if divisible by 100, add an enemy to the list
     Enemy e = new Enemy(25, 125, test.getPath(), 2);
     enemies.add(e);
-  } 
+  }
 }
 
 void mouseClicked() {
@@ -195,19 +195,32 @@ void mouseClicked() {
   towers.add(t);
 }
 
+void shoot() {
+  Dart d = new Dart(towerPos.x, towerPos.y, enemyPos.x, enemyPos.y);
+  darts.add(d);
+
+  println(d);
+}
+
+
 Map test;
 ArrayList<Enemy> enemies;
 ArrayList<DartTower> towers;
+PVector towerPos;
+PVector enemyPos;
+ArrayList<Dart> darts;
 Tower tow;
 //Enemy e;
-
 void setup() {
   size(1100, 600);
   reader = createReader("map.txt");
   test = new Map();
   enemies = new ArrayList<Enemy>();
   tow = new Tower(920, 50);
+  towerPos = new PVector(920, 50);
+  enemyPos = new PVector(0, 125);
   towers = new ArrayList<DartTower>();
+  darts = new ArrayList<Dart>();
 }
 
 void draw() {
@@ -217,6 +230,7 @@ void draw() {
   tow.display();
   for (DartTower t : towers) {
     t.display(test.getBoard());
+    //towerPos = new PVector(t.x,t.y);
   }
   //fill(0);
   //rect(x, y, 50, 50);
@@ -232,6 +246,15 @@ void draw() {
   }
   for (Enemy e : enemies) {
     e.display();
+    //enemyPos = new PVector(e.x,e.y);
     e.move();
+  }
+  if (towerPos.dist(enemyPos) < 300) {
+    if (frameCount % 30 == 0) {
+      shoot();
+    }
+  }
+    for(Dart d : darts) {
+    d.update();
   }
 }
