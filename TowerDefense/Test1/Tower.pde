@@ -63,11 +63,13 @@ class DartTower extends Tower {
 class Dart {
   PVector Pos = new PVector();
   PVector target = new PVector();
-  float speed = 5;
+  PVector start = new PVector();
+  float speed = 7;
   int size = 10;
   PVector velocity;
   
   Dart(float x1, float y1, float x2, float y2){
+    start.set(x1, y1);
     Pos.set(x1,y1);
     target.set(x2,y2);
     
