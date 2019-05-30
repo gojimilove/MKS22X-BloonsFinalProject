@@ -61,7 +61,7 @@ class DartTower extends Tower {
 class Dart {
   PVector Pos = new PVector();
   PVector target = new PVector();
-  float speed = 2;
+  float speed = 5;
   int size = 10;
   PVector velocity;
   

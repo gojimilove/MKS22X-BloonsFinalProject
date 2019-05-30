@@ -195,8 +195,8 @@ void mouseClicked() {
   towers.add(t);
 }
 
-void shoot() {
-  Dart d = new Dart(towerPos.x, towerPos.y, enemyPos.x, enemyPos.y);
+void shoot(float x1, float y1, float x2, float y2) {
+  Dart d = new Dart(x1, y1, x2, y2);
   darts.add(d);
 
   //println(d);
@@ -206,6 +206,7 @@ void shoot() {
 Map test;
 ArrayList<Enemy> enemies;
 ArrayList<DartTower> towers;
+ArrayList<PVector> positions = new ArrayList<PVector>();
 PVector towerPos;
 PVector enemyPos;
 ArrayList<Dart> darts;
@@ -230,7 +231,8 @@ void draw() {
   tow.display();
   for (DartTower t : towers) {
     t.display(test.getBoard());
-    //towerPos = new PVector(t.x,t.y);
+    towerPos = new PVector(t.x+25, t.y+25);
+    positions.add(towerPos);
   }
   //fill(0);
   //rect(x, y, 50, 50);
@@ -238,7 +240,7 @@ void draw() {
   textSize(12);
   text(("Time: "+(millis()%100)), 10, 20);
   text(("Enemies: "+enemies.size()), 10, 50);
-  if (enemies.size() < 20) { //limit to # of enemies on board at once
+  if (enemies.size() < 5) { //limit to # of enemies on board at once
     spawn();
   }
   for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
@@ -246,15 +248,22 @@ void draw() {
   }
   for (Enemy e : enemies) {
     e.display();
-    enemyPos = new PVector(e.x,e.y);
+    enemyPos = new PVector(e.x, e.y);
     e.move();
-  }
-  if (towerPos.dist(enemyPos) < 300) {
-    if (frameCount % 30 == 0) {
-      shoot();
+    for (PVector p : positions) {
+      if (p.dist(enemyPos) < 300) {
+        if (frameCount % 30 == 0) {
+          shoot(p.x,p.y,enemyPos.x,enemyPos.y);
+        }
+      }
     }
   }
-    for(Dart d : darts) {
+  
+  //if(d.Pos.x < 0 || d.Pos.x > 900 || d.Pos.y > 600 || d.Pos.y < 0 ){
+    
+  for (Dart d : darts) {
     d.update();
+    
+      
   }
 }
