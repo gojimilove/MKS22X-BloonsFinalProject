@@ -253,17 +253,16 @@ void draw() {
     for (PVector p : positions) {
       if (p.dist(enemyPos) < 300) {
         if (frameCount % 30 == 0) {
-          shoot(p.x,p.y,enemyPos.x,enemyPos.y);
+          shoot(p.x, p.y, enemyPos.x, enemyPos.y);
         }
       }
     }
   }
-  
-  //if(d.Pos.x < 0 || d.Pos.x > 900 || d.Pos.y > 600 || d.Pos.y < 0 ){
-    
+  for (int i = 0; i < darts.size(); i++) {
+    if (darts.get(i).Pos.x < 100 || darts.get(i).Pos.x > 800 || darts.get(i).Pos.y > 500 || darts.get(i).Pos.y < 100 ) darts.remove(i);
+  }
+
   for (Dart d : darts) {
     d.update();
-    
-      
   }
 }
