@@ -79,7 +79,9 @@ class Dart {
     translate(Pos.x,Pos.y);
     rotate(angle);
     stroke(0);
+    strokeWeight(2);
     line(0,0,size,0);
+    strokeWeight(1);
     popMatrix();
   }
 }

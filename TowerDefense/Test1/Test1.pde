@@ -199,7 +199,7 @@ void shoot() {
   Dart d = new Dart(towerPos.x, towerPos.y, enemyPos.x, enemyPos.y);
   darts.add(d);
 
-  println(d);
+  //println(d);
 }
 
 
@@ -246,7 +246,7 @@ void draw() {
   }
   for (Enemy e : enemies) {
     e.display();
-    //enemyPos = new PVector(e.x,e.y);
+    enemyPos = new PVector(e.x,e.y);
     e.move();
   }
   if (towerPos.dist(enemyPos) < 300) {
