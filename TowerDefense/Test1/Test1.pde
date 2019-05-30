@@ -190,9 +190,14 @@ void spawn() {
   }
 }
 
-void mouseClicked() {
-  DartTower t = new DartTower(mouseX, mouseY);
+void spawnT(int xT, int yT) {
+  DartTower t = new DartTower(xT, yT);
   towers.add(t);
+}
+
+void mouseClicked() {
+  if (mouseButton == LEFT) spawnT(mouseX, mouseY);
+  
 }
 
 void shoot(float x1, float y1, float x2, float y2) {
@@ -231,8 +236,8 @@ void draw() {
   tow.display();
   for (DartTower t : towers) {
     t.display(test.getBoard());
-    towerPos = new PVector(t.x+25, t.y+25);
-    positions.add(towerPos);
+    PVector tp = new PVector(t.x+25, t.y+25);
+    positions.add(tp);
   }
   //fill(0);
   //rect(x, y, 50, 50);
@@ -248,8 +253,7 @@ void draw() {
   }
   for (Enemy e : enemies) {
     e.display();
-    enemyPos = new PVector(e.x, e.y);
-    e.move();
+    enemyPos = new PVector(e.x, e.y);   
     for (PVector p : positions) {
       if (p.dist(enemyPos) < 300) {
         if (frameCount % 30 == 0) {
@@ -257,9 +261,12 @@ void draw() {
         }
       }
     }
+    e.move();
   }
   for (int i = 0; i < darts.size(); i++) {
-    if (darts.get(i).Pos.x < 100 || darts.get(i).Pos.x > 800 || darts.get(i).Pos.y > 500 || darts.get(i).Pos.y < 100 ) darts.remove(i);
+    if (darts.get(i).Pos.x < 0 || darts.get(i).Pos.x > 900 || darts.get(i).Pos.y > 600 || darts.get(i).Pos.y < 0 ) darts.remove(i);
+    //print(darts.get(i).Pos.dist(darts.get(i).start));
+    //if (darts.get(i).Pos.dist(darts.get(i).start) > 300) darts.remove(i);
   }
 
   for (Dart d : darts) {
