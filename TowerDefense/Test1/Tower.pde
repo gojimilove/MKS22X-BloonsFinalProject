@@ -54,6 +54,8 @@ class DartTower extends Tower {
       fill(255);
       textSize(12);
       text("X: "+x+"\nY: "+y, x, y+10);
+      fill(255, 100);
+      ellipse(x+25,y+25,300,300);
     }
   }
 }
