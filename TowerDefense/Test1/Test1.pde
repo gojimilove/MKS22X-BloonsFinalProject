@@ -190,19 +190,33 @@ void spawn() {
   }
 }
 
+int mode = 0;
 void spawnT(int xT, int yT) {
-  DartTower t = new DartTower(xT, yT);
-  towers.add(t);
+  if (mode == 1) {
+    DartTower t = new DartTower(xT, yT);
+    dartTowers.add(t);
+  } else if (mode == 2) {
+    TackTower t = new TackTower(xT, yT);
+    tackTowers.add(t);
+  }
 }
 
 void removeT(int xT, int yT) {
-  for (int i = 0; i < towers.size(); i++) {
-    if (xT >= towers.get(i).x && xT < towers.get(i).x+50 && yT >= towers.get(i).y && yT < towers.get(i).y+50) towers.remove(i);
+  for (int i = 0; i < dartTowers.size(); i++) {
+    if (xT >= dartTowers.get(i).x && xT < dartTowers.get(i).x+50 && yT >= dartTowers.get(i).y && yT < dartTowers.get(i).y+50) dartTowers.remove(i);
+  }
+  for (int i = 0; i < tackTowers.size(); i++) {
+    if (xT >= tackTowers.get(i).x && xT < tackTowers.get(i).x+50 && yT >= tackTowers.get(i).y && yT < tackTowers.get(i).y+50) tackTowers.remove(i);
   }
   //positions.remove(0);
 }
 
 void mouseClicked() {
+  if (mouseX >= 920 && mouseX < 970 && mouseY >= 70 && mouseY < 120) {
+    mode = 1;
+  } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 130 && mouseY < 180) {
+    mode = 2;
+  }
   if (mouseButton == LEFT) spawnT(mouseX, mouseY);
   else if (mouseButton == RIGHT) removeT(mouseX, mouseY);
 }
@@ -217,7 +231,8 @@ void shoot(float x1, float y1, float x2, float y2) {
 
 Map test;
 ArrayList<Enemy> enemies;
-ArrayList<DartTower> towers;
+ArrayList<DartTower> dartTowers;
+ArrayList<TackTower> tackTowers;
 ArrayList<PVector> positions = new ArrayList<PVector>();
 PVector towerPos;
 PVector enemyPos;
@@ -232,7 +247,8 @@ void setup() {
   tow = new Tower(920, 50);
   towerPos = new PVector(920, 50);
   enemyPos = new PVector(0, 125);
-  towers = new ArrayList<DartTower>();
+  dartTowers = new ArrayList<DartTower>();
+  tackTowers = new ArrayList<TackTower>();
   darts = new ArrayList<Dart>();
 }
 
@@ -241,10 +257,13 @@ void draw() {
   test.display();
   fill(255);
   tow.display();
-  for (DartTower t : towers) {
+  for (DartTower t : dartTowers) {
     t.display(test.getBoard());
     PVector tp = new PVector(t.x+25, t.y+25);
     positions.add(tp);
+  }
+  for (TackTower t : tackTowers) {
+    t.display(test.getBoard());
   }
   //fill(0);
   //rect(x, y, 50, 50);

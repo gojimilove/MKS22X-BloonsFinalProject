@@ -55,10 +55,45 @@ class DartTower extends Tower {
       textSize(12);
       text("X: "+x+"\nY: "+y, x, y+10);
       fill(255, 100);
-      ellipse(x+25,y+25,300,300);
+      ellipse(x+25,y+25,range,range);
     }
   }
 }
+
+class TackTower extends Tower {
+  TackTower(int x, int y) {
+    super(x, y);
+    img = loadImage("Tack_Shooter.png");
+    range = 200;
+  }
+  
+  void display() {
+    super.display();
+  }
+  
+  void display(Tile[][] board) {
+    int id = -1;
+    for (int i = 0; i < board.length; i++) {
+      for (int j = 0; j < board[0].length; j++) {
+        if (x >= board[i][j].getX() && x < board[i][j].getX()+50 && y >= board[i][j].getY() && y < board[i][j].getY()+50) {
+          x = board[i][j].getX();
+          y = board[i][j].getY();
+          id = board[i][j].getID();
+        }
+      }
+    }
+    if (id == -1 && x < 900 && x >= 0 && y < 600 && y >= 0) {
+      fill(0);
+      image(img, x, y, 50, 50);
+      fill(255);
+      textSize(12);
+      text("X: "+x+"\nY: "+y, x, y+10);
+      fill(255, 100);
+      ellipse(x+25,y+25,range,range);
+    }
+  }
+}
+  
 
 class Dart {
   PVector Pos = new PVector();
