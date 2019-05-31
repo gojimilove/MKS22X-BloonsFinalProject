@@ -256,6 +256,10 @@ void draw() {
   background(255);
   test.display();
   fill(255);
+  stroke(255,0,0);
+  if (mode == 1) rect(920,70,50,50);
+  if (mode == 2) rect(920,130,50,50);
+  stroke(0);
   tow.display();
   for (DartTower t : dartTowers) {
     t.display(test.getBoard());
