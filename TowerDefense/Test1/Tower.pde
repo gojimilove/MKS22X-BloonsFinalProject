@@ -51,9 +51,9 @@ class DartTower extends Tower {
     if (id == -1 && x < 900 && x >= 0 && y < 600 && y >= 0) {
       fill(0);
       image(img, x, y, 50, 50);
-      fill(255);
-      textSize(12);
-      text("X: "+x+"\nY: "+y, x, y+10);
+      //fill(255);
+      //textSize(12);
+      //text("X: "+x+"\nY: "+y, x, y+10);
       fill(255, 100);
       ellipse(x+25,y+25,range,range);
     }
@@ -85,9 +85,9 @@ class TackTower extends Tower {
     if (id == -1 && x < 900 && x >= 0 && y < 600 && y >= 0) {
       fill(0);
       image(img, x, y, 50, 50);
-      fill(255);
-      textSize(12);
-      text("X: "+x+"\nY: "+y, x, y+10);
+      //fill(255);
+      //textSize(12);
+      //text("X: "+x+"\nY: "+y, x, y+10);
       fill(255, 100);
       ellipse(x+25,y+25,range,range);
     }
