@@ -204,7 +204,6 @@ void removeT(int xT, int yT) {
 void mouseClicked() {
   if (mouseButton == LEFT) spawnT(mouseX, mouseY);
   else if (mouseButton == RIGHT) removeT(mouseX, mouseY);
-  
 }
 
 void shoot(float x1, float y1, float x2, float y2) {
@@ -258,16 +257,23 @@ void draw() {
   for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
     if (enemies.get(i).isAlive == false) enemies.remove(i);
   }
+  //enemyPos = new PVector(enemies.get(0).x, enemies.get(0).y);   
   for (Enemy e : enemies) {
     e.display();
     enemyPos = new PVector(e.x, e.y);   
     for (PVector p : positions) {
       if (p.dist(enemyPos) < 300) {
-        if (frameCount % 30 == 0) {
+        if (frameCount % 60 == 0) {
           shoot(p.x, p.y, enemyPos.x, enemyPos.y);
         }
       }
     }
+    //for (int i = 0; i < darts.size(); i++) {
+    //  if (darts.get(i).Pos.dist(enemyPos) < 5) {
+    //    println(enemies.size());
+    //    enemies.remove(0);
+    //  }
+    //}
     e.move();
   }
   for (int i = 0; i < darts.size(); i++) {
