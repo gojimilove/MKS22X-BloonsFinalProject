@@ -199,6 +199,7 @@ void removeT(int xT, int yT) {
   for (int i = 0; i < towers.size(); i++) {
     if (xT >= towers.get(i).x && xT < towers.get(i).x+50 && yT >= towers.get(i).y && yT < towers.get(i).y+50) towers.remove(i);
   }
+  //positions.remove(0);
 }
 
 void mouseClicked() {
