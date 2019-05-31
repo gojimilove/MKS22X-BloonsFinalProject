@@ -22,3 +22,4 @@ stuff
 5/25/19: fixed errors with enemy movement, can spawn multiple but no more than 20 \
 5/28/19: started working on Tower class, towers (originally black squares, now images of the monkey dart tower) spawn on the map when the player clicks on the screen, centered, and cannot be placed on the path \
 5/29/19: display different kinds of towers on the side
+5/30/19: worked on shooting (together), made tackTower class and variable mode that allows the player to select which tower to place \
