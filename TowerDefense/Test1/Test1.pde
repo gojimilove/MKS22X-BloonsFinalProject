@@ -237,6 +237,7 @@ ArrayList<PVector> positions = new ArrayList<PVector>();
 PVector towerPos;
 PVector enemyPos;
 ArrayList<Dart> darts;
+int sec=0;
 Tower tow;
 //Enemy e;
 void setup() {
@@ -289,6 +290,8 @@ void draw() {
       if (p.dist(enemyPos) < 200) {
         if (frameCount % 60 == 0) {
           shoot(p.x, p.y, enemyPos.x, enemyPos.y);
+          
+          println("positions:" + positions.size());
         }
       }
     }
@@ -301,7 +304,10 @@ void draw() {
     e.move();
   }
   for (int i = 0; i < darts.size(); i++) {
-    if (darts.get(i).Pos.x < 0 || darts.get(i).Pos.x > 900 || darts.get(i).Pos.y > 600 || darts.get(i).Pos.y < 0 ) darts.remove(i);
+    if (darts.get(i).Pos.x < 0 || darts.get(i).Pos.x > 900 || darts.get(i).Pos.y > 600 || darts.get(i).Pos.y < 0 ) {
+      darts.remove(i);
+      println("darts:" + darts.size());
+    }
     //print(darts.get(i).Pos.dist(darts.get(i).start));
     //if (darts.get(i).Pos.dist(darts.get(i).start) > 300) darts.remove(i);
   }
@@ -312,7 +318,7 @@ void draw() {
   int en = 0;
   for (int i = 0; i < darts.size(); i++) {
     if (darts.get(i).Pos.dist(enemyPos) < 5 && en < enemies.size()) {
-      println(enemies.size());
+      //println(enemies.size());
       enemies.remove(en);
       en = en + 1;
     }
