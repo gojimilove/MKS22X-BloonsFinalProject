@@ -1,5 +1,3 @@
-
-
 String[] types = new String[]{"Dart_Monkey.png", "Tack_Shooter.png"};
 class Tower extends Thing {
   int value, damage, level;

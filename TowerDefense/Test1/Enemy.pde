@@ -46,6 +46,7 @@ class Enemy extends Thing {
       }
     }
     else {
+      lives--;
       isAlive = false; //reached the end
     }
   }
