@@ -319,7 +319,8 @@ void draw() {
   for (int i = 0; i < darts.size(); i++) {
     if (darts.get(i).Pos.dist(enemyPos) < 5 && en < enemies.size()) {
       //println(enemies.size());
-      enemies.remove(en);
+      enemies.get(en).isAlive = false;
+      darts.remove(i);
       en = en + 1;
     }
   }
