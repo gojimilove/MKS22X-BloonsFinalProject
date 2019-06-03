@@ -201,6 +201,9 @@ void spawnT(int xT, int yT) {
   } else if (mode == 3) {
     IceTower t = new IceTower(xT, yT);
     iceTowers.add(t);
+  } else if (mode == 4) {
+    SniperTower t = new SniperTower(xT, yT);
+    sniperTowers.add(t);
   }
 }
 
@@ -221,6 +224,8 @@ void mouseClicked() {
     mode = 2;
   } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 190 && mouseY < 240) {
     mode = 3;
+  } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
+    mode = 4;
   }
   if (mouseButton == LEFT) spawnT(mouseX, mouseY);
   else if (mouseButton == RIGHT) removeT(mouseX, mouseY);
@@ -239,6 +244,7 @@ ArrayList<Enemy> enemies;
 ArrayList<DartTower> dartTowers;
 ArrayList<TackTower> tackTowers;
 ArrayList<IceTower> iceTowers;
+ArrayList<SniperTower> sniperTowers;
 ArrayList<PVector> positions = new ArrayList<PVector>();
 PVector towerPos;
 PVector enemyPos;
@@ -257,6 +263,7 @@ void setup() {
   dartTowers = new ArrayList<DartTower>();
   tackTowers = new ArrayList<TackTower>();
   iceTowers = new ArrayList<IceTower>();
+  sniperTowers = new ArrayList<SniperTower>();
   darts = new ArrayList<Dart>();
 }
 
@@ -268,6 +275,7 @@ void draw() {
   if (mode == 1) rect(920, 70, 50, 50);
   if (mode == 2) rect(920, 130, 50, 50);
   if (mode == 3) rect(920, 190, 50, 50);
+  if (mode == 4) rect(920, 250, 50, 50);
   stroke(0);
   tow.display();
   for (DartTower t : dartTowers) {
@@ -279,6 +287,9 @@ void draw() {
     t.display(test.getBoard());
   }
   for (IceTower t : iceTowers) {
+    t.display(test.getBoard());
+  }
+  for (SniperTower t : sniperTowers) {
     t.display(test.getBoard());
   }
   //fill(0);

@@ -8,7 +8,7 @@ class Tower extends Thing {
 
   Tower(int x, int y) {
     super(x, y);
-    towerPos = new PVector(x,y);
+    towerPos = new PVector(x, y);
   }
   void display() {
     textSize(24);
@@ -21,6 +21,8 @@ class Tower extends Thing {
     text("Tack Shooter", x+55, y+105);
     image(loadImage("Ice_Tower.png"), x, y+140, 50, 50);
     text("Ice Tower", x+55, y+165);
+    image(loadImage("Sniper_Monkey.png"), x, y+200);
+    text("Sniper Monkey", x+55, y+225);
   }
 
   //abstract void shoot();
@@ -34,11 +36,11 @@ class DartTower extends Tower {
     img = loadImage("Dart_Monkey.png");
     range = 300;
   }
-  
+
   void display() {
     super.display();
   }
-  
+
   void display(Tile[][] board) {
     int id = -1;
     for (int i = 0; i < board.length; i++) {
@@ -57,16 +59,9 @@ class DartTower extends Tower {
       //textSize(12);
       //text("X: "+x+"\nY: "+y, x, y+10);
       fill(255, 100);
-      ellipse(x+25,y+25,range,range);
+      ellipse(x+25, y+25, range, range);
     }
   }
-  
-  void shoot(float x1, float y1, float x2, float y2) {
-  Dart d = new Dart(x1, y1, x2, y2);
-  darts.add(d);
-
-  //println(d);
-}
 }
 
 class TackTower extends Tower {
@@ -75,11 +70,11 @@ class TackTower extends Tower {
     img = loadImage("Tack_Shooter.png");
     range = 200;
   }
-  
+
   void display() {
     super.display();
   }
-  
+
   void display(Tile[][] board) {
     int id = -1;
     for (int i = 0; i < board.length; i++) {
@@ -98,7 +93,7 @@ class TackTower extends Tower {
       //textSize(12);
       //text("X: "+x+"\nY: "+y, x, y+10);
       fill(255, 100);
-      ellipse(x+25,y+25,range,range);
+      ellipse(x+25, y+25, range, range);
     }
   }
 }
@@ -109,11 +104,11 @@ class IceTower extends Tower {
     img = loadImage("Ice_Tower.png");
     range = 200;
   }
-  
+
   void display() {
     super.display();
   }
-  
+
   void display(Tile[][] board) {
     int id = -1;
     for (int i = 0; i < board.length; i++) {
@@ -132,11 +127,43 @@ class IceTower extends Tower {
       //textSize(12);
       //text("X: "+x+"\nY: "+y, x, y+10);
       fill(255, 100);
-      ellipse(x+25,y+25,range,range);
+      ellipse(x+25, y+25, range, range);
     }
   }
 }
-  
+
+class SniperTower extends Tower {
+  SniperTower(int x, int y) {
+    super(x, y);
+    img = loadImage("Sniper_Monkey.png");
+    range = 0;
+  }
+
+  void display() {
+    super.display();
+  }
+
+  void display(Tile[][] board) {
+    int id = -1;
+    for (int i = 0; i < board.length; i++) {
+      for (int j = 0; j < board[0].length; j++) {
+        if (x >= board[i][j].getX() && x < board[i][j].getX()+50 && y >= board[i][j].getY() && y < board[i][j].getY()+50) {
+          x = board[i][j].getX();
+          y = board[i][j].getY();
+          id = board[i][j].getID();
+        }
+      }
+    }
+    if (id == -1 && x < 900 && x >= 0 && y < 600 && y >= 0) {
+      fill(0);
+      image(img, x, y, 50, 50);
+      //fill(255);
+      //textSize(12);
+      //text("X: "+x+"\nY: "+y, x, y+10);
+    }
+  }
+}
+
 
 class Dart {
   PVector Pos = new PVector();
@@ -145,24 +172,24 @@ class Dart {
   float speed = 7;
   int size = 10;
   PVector velocity;
-  
-  Dart(float x1, float y1, float x2, float y2){
+
+  Dart(float x1, float y1, float x2, float y2) {
     start.set(x1, y1);
-    Pos.set(x1,y1);
-    target.set(x2,y2);
-    
-    velocity = PVector.sub(target,Pos);
+    Pos.set(x1, y1);
+    target.set(x2, y2);
+
+    velocity = PVector.sub(target, Pos);
     velocity.setMag(speed);
   }
-    void update() {
+  void update() {
     Pos.add(velocity);
     float angle = velocity.heading();
     pushMatrix();
-    translate(Pos.x,Pos.y);
+    translate(Pos.x, Pos.y);
     rotate(angle);
     stroke(0);
     strokeWeight(2);
-    line(0,0,size,0);
+    line(0, 0, size, 0);
     strokeWeight(1);
     popMatrix();
   }
