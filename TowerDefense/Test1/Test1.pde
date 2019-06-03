@@ -232,7 +232,7 @@ void mouseClicked() {
 }
 
 void shoot(float x1, float y1, float x2, float y2) {
-  Dart d = new Dart(x1, y1, x2, y2,0);
+  Dart d = new Dart(x1, y1, x2, y2, 0);
   darts.add(d);
 
   //println(d);
@@ -251,6 +251,7 @@ PVector enemyPos;
 ArrayList<Dart> darts;
 Iterator<Dart> D;
 int sec=0;
+boolean done = false;
 Tower tow;
 //Enemy e;
 void setup() {
@@ -280,10 +281,17 @@ void draw() {
   if (mode == 4) rect(920, 250, 50, 50);
   stroke(0);
   tow.display();
+  //if(!done){
+  //for (int i = 0; i < dartTowers.size(); i++) {
+  //  PVector tp = new PVector( dartTowers.get(i).x, dartTowers.get(i).y);
+  //  positions.add(tp);
+  //}
+  //done  =  true;
+  //}
   for (DartTower t : dartTowers) {
     t.display(test.getBoard());
-    PVector tp = new PVector(t.x+25, t.y+25);
-    positions.add(tp);
+      PVector tp = new PVector( t.x+25, t.y+25);
+      positions.add(tp);
   }
   for (TackTower t : tackTowers) {
     t.display(test.getBoard());
@@ -306,11 +314,11 @@ void draw() {
   for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
     if (enemies.get(i).isAlive == false) enemies.remove(i);
   }
-  
+
   //enemyPos = new PVector(enemies.get(0).x, enemies.get(0).y);   
   for (Enemy e : enemies) {
-     e.display();
-     enemyPos = new PVector(e.x, e.y);
+    e.display();
+    enemyPos = new PVector(e.x, e.y);
     for (PVector p : positions) {
       if (p.dist(enemyPos) < 200) {
         if (frameCount % 60 == 0) {
@@ -319,8 +327,11 @@ void draw() {
           println("positions:" + positions.size());
         }
       }
+      //else{
+      //  positions = new ArrayList<PVector>();
+      //}
     }
-    println(enemies.size());
+    //println(enemies.size());
     //for (int i = 0; i < darts.size(); i++) {
     //  if (darts.get(i).Pos.dist(enemyPos) < 5) {
     //    println(enemies.size());
@@ -340,15 +351,15 @@ void draw() {
   }
 
   for (Dart d : darts) {
-    d.update();    
+    d.update();
   }
-  while(D.hasNext()){
+  while (D.hasNext()) {
     Dart dd = D.next();
-    if(dd.distTraveled > 300){
+    if (dd.distTraveled > 250) {
       D.remove();
     }
   }
-      
+
   int en = 0;
   for (int i = 0; i < darts.size(); i++) {
     if (darts.get(i).Pos.dist(enemyPos) < 5 && en < enemies.size()) {
