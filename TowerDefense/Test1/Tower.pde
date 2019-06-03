@@ -19,6 +19,8 @@ class Tower extends Thing {
     text("Dart Monkey", x+55, y+45);
     image(loadImage("Tack_Shooter.png"), x, y+80, 50, 50);
     text("Tack Shooter", x+55, y+105);
+    image(loadImage("Ice_Tower.png"), x, y+140, 50, 50);
+    text("Ice Tower", x+55, y+165);
   }
 
   //abstract void shoot();
@@ -58,12 +60,53 @@ class DartTower extends Tower {
       ellipse(x+25,y+25,range,range);
     }
   }
+  
+  void shoot(float x1, float y1, float x2, float y2) {
+  Dart d = new Dart(x1, y1, x2, y2);
+  darts.add(d);
+
+  //println(d);
+}
 }
 
 class TackTower extends Tower {
   TackTower(int x, int y) {
     super(x, y);
     img = loadImage("Tack_Shooter.png");
+    range = 200;
+  }
+  
+  void display() {
+    super.display();
+  }
+  
+  void display(Tile[][] board) {
+    int id = -1;
+    for (int i = 0; i < board.length; i++) {
+      for (int j = 0; j < board[0].length; j++) {
+        if (x >= board[i][j].getX() && x < board[i][j].getX()+50 && y >= board[i][j].getY() && y < board[i][j].getY()+50) {
+          x = board[i][j].getX();
+          y = board[i][j].getY();
+          id = board[i][j].getID();
+        }
+      }
+    }
+    if (id == -1 && x < 900 && x >= 0 && y < 600 && y >= 0) {
+      fill(0);
+      image(img, x, y, 50, 50);
+      //fill(255);
+      //textSize(12);
+      //text("X: "+x+"\nY: "+y, x, y+10);
+      fill(255, 100);
+      ellipse(x+25,y+25,range,range);
+    }
+  }
+}
+
+class IceTower extends Tower {
+  IceTower(int x, int y) {
+    super(x, y);
+    img = loadImage("Ice_Tower.png");
     range = 200;
   }
   
