@@ -3,6 +3,7 @@ class Enemy extends Thing {
   int value, health, index;
   float speed, xDir, yDir;
   boolean isAlive;
+  
 
   Enemy(int x, int y, Tile[] p, float s) {
     super(x, y);

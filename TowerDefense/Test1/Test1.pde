@@ -232,7 +232,7 @@ void mouseClicked() {
 }
 
 void shoot(float x1, float y1, float x2, float y2) {
-  Dart d = new Dart(x1, y1, x2, y2);
+  Dart d = new Dart(x1, y1, x2, y2,0);
   darts.add(d);
 
   //println(d);
@@ -249,6 +249,7 @@ ArrayList<PVector> positions = new ArrayList<PVector>();
 PVector towerPos;
 PVector enemyPos;
 ArrayList<Dart> darts;
+Iterator<Dart> D;
 int sec=0;
 Tower tow;
 //Enemy e;
@@ -265,6 +266,7 @@ void setup() {
   iceTowers = new ArrayList<IceTower>();
   sniperTowers = new ArrayList<SniperTower>();
   darts = new ArrayList<Dart>();
+  Iterator<Dart> D = darts.iterator();
 }
 
 void draw() {
@@ -304,10 +306,11 @@ void draw() {
   for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
     if (enemies.get(i).isAlive == false) enemies.remove(i);
   }
+  
   //enemyPos = new PVector(enemies.get(0).x, enemies.get(0).y);   
   for (Enemy e : enemies) {
-    e.display();
-    enemyPos = new PVector(e.x, e.y);   
+     e.display();
+     enemyPos = new PVector(e.x, e.y);
     for (PVector p : positions) {
       if (p.dist(enemyPos) < 200) {
         if (frameCount % 60 == 0) {
@@ -317,6 +320,7 @@ void draw() {
         }
       }
     }
+    println(enemies.size());
     //for (int i = 0; i < darts.size(); i++) {
     //  if (darts.get(i).Pos.dist(enemyPos) < 5) {
     //    println(enemies.size());
@@ -325,6 +329,7 @@ void draw() {
     //}
     e.move();
   }
+  Iterator<Dart> D = darts.iterator();
   for (int i = 0; i < darts.size(); i++) {
     if (darts.get(i).Pos.x < 0 || darts.get(i).Pos.x > 900 || darts.get(i).Pos.y > 600 || darts.get(i).Pos.y < 0 ) {
       darts.remove(i);
@@ -335,8 +340,15 @@ void draw() {
   }
 
   for (Dart d : darts) {
-    d.update();
+    d.update();    
   }
+  while(D.hasNext()){
+    Dart dd = D.next();
+    if(dd.distTraveled > 300){
+      D.remove();
+    }
+  }
+      
   int en = 0;
   for (int i = 0; i < darts.size(); i++) {
     if (darts.get(i).Pos.dist(enemyPos) < 5 && en < enemies.size()) {

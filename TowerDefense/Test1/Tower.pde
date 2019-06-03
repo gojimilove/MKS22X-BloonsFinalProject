@@ -172,14 +172,16 @@ class Dart {
   float speed = 7;
   int size = 10;
   PVector velocity;
+  int distTraveled;
 
-  Dart(float x1, float y1, float x2, float y2) {
+  Dart(float x1, float y1, float x2, float y2,int dist) {
     start.set(x1, y1);
     Pos.set(x1, y1);
     target.set(x2, y2);
 
     velocity = PVector.sub(target, Pos);
     velocity.setMag(speed);
+    distTraveled = dist;
   }
   void update() {
     Pos.add(velocity);
@@ -192,5 +194,6 @@ class Dart {
     line(0, 0, size, 0);
     strokeWeight(1);
     popMatrix();
+    distTraveled = distTraveled + 10;
   }
 }
