@@ -283,7 +283,7 @@ void draw() {
   //if (lives == 0) alive = false;
   if (lives == 0) {
     textSize(50);
-    fill(255, 0,0);
+    fill(255, 0, 0);
     text("GAME OVER", 300, 300);
   }
   fill(255);
@@ -317,21 +317,20 @@ void draw() {
   for (SniperTower t : sniperTowers) {
     t.display(test.getBoard());
   }
-  //fill(0);
-  //rect(x, y, 50, 50);
+
   fill(0, 0, 0);
   textSize(12);
-  text(("Time: "+(millis()%100)), 10, 20);
+  text(("Round: "+round), 10, 20);
   text(("Lives: "+lives), 10, 50);
-  if (enemies.size() < 5) { //limit to # of enemies on board at once
+  if (lives > 0 && enemies.size() < 5) { //limit to # of enemies on board at once
     round++;
     spawn();
   }
   for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
     if (enemies.get(i).isAlive == false) enemies.remove(i);
-  }
+  } 
+  //enemyPos = new PVector(enemies.get(0).x, enemies.get(0).y);    }
 
-  //enemyPos = new PVector(enemies.get(0).x, enemies.get(0).y);   
   for (Enemy e : enemies) {
     e.display();
     enemyPos = new PVector(e.x, e.y);
@@ -339,30 +338,20 @@ void draw() {
       if (p.dist(enemyPos) < 200) {
         if (frameCount % 60 == 0) {
           shoot(p.x, p.y, enemyPos.x, enemyPos.y);
-
           println("positions:" + dartPositions.size());
         }
       }
-      //else{
-      //  positions = new ArrayList<PVector>();
-      //}
     }
     for (PVector p : icePositions) {
       if (p.dist(enemyPos) < 100) {
         if (frameCount % 100 == 0) {
-          e.col = color(0,0,255);
+          e.col = color(0, 0, 255);
+          final int start = millis();
+          if (millis() - start > 10) e.col = color(255, 0, 0);
         }
       }
-      //else e.col = color(255,0,0);
     }
-    //println(enemies.size());
-    //for (int i = 0; i < darts.size(); i++) {
-    //  if (darts.get(i).Pos.dist(enemyPos) < 5) {
-    //    println(enemies.size());
-    //    enemies.remove(0);
-    //  }
-    //}
-    if (e.col == color(255,0,0)) e.move();
+    if (e.col == color(255, 0, 0)) e.move();
   }
   Iterator<Dart> D = darts.iterator();
   for (int i = 0; i < darts.size(); i++) {
@@ -370,8 +359,6 @@ void draw() {
       darts.remove(i);
       println("darts:" + darts.size());
     }
-    //print(darts.get(i).Pos.dist(darts.get(i).start));
-    //if (darts.get(i).Pos.dist(darts.get(i).start) > 300) darts.remove(i);
   }
 
   for (Dart d : darts) {
