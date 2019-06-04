@@ -253,7 +253,7 @@ ArrayList<Dart> darts;
 Iterator<Dart> D;
 int sec=0;
 int lives = 5;
-int round = 0;
+int round = 1;
 boolean done = false;
 //boolean alive = true;
 Tower tow;
@@ -322,10 +322,16 @@ void draw() {
   textSize(12);
   text(("Round: "+round), 10, 20);
   text(("Lives: "+lives), 10, 50);
+  if (round  == 1 && !done ){
   if (lives > 0 && enemies.size() < 5) { //limit to # of enemies on board at once
-    round++;
     spawn();
   }
+  }
+  if(enemies.size() == 5 && round == 1){
+    done = true;
+  }
+  
+  
   for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
     if (enemies.get(i).isAlive == false) enemies.remove(i);
   } 
