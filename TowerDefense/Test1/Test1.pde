@@ -346,8 +346,7 @@ void draw() {
       if (p.dist(enemyPos) < 100) {
         if (frameCount % 100 == 0) {
           e.col = color(0, 0, 255);
-          final int start = millis();
-          if (millis() - start > 10) e.col = color(255, 0, 0);
+          //if (one_second_has_passed) e.col = color(255, 0, 0);
         }
       }
     }
