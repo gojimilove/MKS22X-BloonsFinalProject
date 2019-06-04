@@ -63,10 +63,12 @@ class DartTower extends Tower {
 }
 
 class TackTower extends Tower {
+  ArrayList<Dart> bullets;
   TackTower(int x, int y) {
     super(x, y);
     img = loadImage("Tack_Shooter.png");
     range = 200;
+    bullets = new ArrayList<Dart>();
   }
 
   void display() {
@@ -175,13 +177,6 @@ class Dart {
   int size = 10;
   PVector velocity;
   int distTraveled;
-  
-  Dart(float x1, float y1) {
-    start.set(x1, y1);
-    Pos.set(x1, y1);
-    
-    velocity.setMag(speed);
-  }
 
   Dart(float x1, float y1, float x2, float y2,int dist) {
     start.set(x1, y1);

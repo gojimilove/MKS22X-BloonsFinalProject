@@ -338,7 +338,7 @@ void draw() {
       if (p.dist(enemyPos) < 200) {
         if (frameCount % 60 == 0) {
           shoot(p.x, p.y, enemyPos.x, enemyPos.y);
-          println("positions:" + dartPositions.size());
+          //println(":" + dartPositions.size());
         }
       }
     }
