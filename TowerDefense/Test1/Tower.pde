@@ -94,6 +94,10 @@ class TackTower extends Tower {
       ellipse(x+25, y+25, range, range);
     }
   }
+  
+  void shoot() {
+    
+  }
 }
 
 class IceTower extends Tower {
@@ -171,6 +175,13 @@ class Dart {
   int size = 10;
   PVector velocity;
   int distTraveled;
+  
+  Dart(float x1, float y1) {
+    start.set(x1, y1);
+    Pos.set(x1, y1);
+    
+    velocity.setMag(speed);
+  }
 
   Dart(float x1, float y1, float x2, float y2,int dist) {
     start.set(x1, y1);

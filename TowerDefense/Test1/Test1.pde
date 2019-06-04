@@ -2,8 +2,6 @@ import java.*;
 import java.util.*;
 import java.io.*;
 
-
-
 interface Displayable {
   void display();
 }
@@ -218,17 +216,19 @@ void removeT(int xT, int yT) {
 }
 
 void mouseClicked() {
-  if (mouseX >= 920 && mouseX < 970 && mouseY >= 70 && mouseY < 120) {
-    mode = 1;
-  } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 130 && mouseY < 180) {
-    mode = 2;
-  } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 190 && mouseY < 240) {
-    mode = 3;
-  } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
-    mode = 4;
+  if (lives > 0) {
+    if (mouseX >= 920 && mouseX < 970 && mouseY >= 70 && mouseY < 120) {
+      mode = 1;
+    } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 130 && mouseY < 180) {
+      mode = 2;
+    } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 190 && mouseY < 240) {
+      mode = 3;
+    } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
+      mode = 4;
+    }
+    if (mouseButton == LEFT) spawnT(mouseX, mouseY);
+    else if (mouseButton == RIGHT) removeT(mouseX, mouseY);
   }
-  if (mouseButton == LEFT) spawnT(mouseX, mouseY);
-  else if (mouseButton == RIGHT) removeT(mouseX, mouseY);
 }
 
 void shoot(float x1, float y1, float x2, float y2) {
@@ -245,15 +245,20 @@ ArrayList<DartTower> dartTowers;
 ArrayList<TackTower> tackTowers;
 ArrayList<IceTower> iceTowers;
 ArrayList<SniperTower> sniperTowers;
-ArrayList<PVector> positions = new ArrayList<PVector>();
+ArrayList<PVector> dartPositions;
+ArrayList<PVector> icePositions;
 PVector towerPos;
 PVector enemyPos;
 ArrayList<Dart> darts;
 Iterator<Dart> D;
 int sec=0;
+int lives = 5;
+int round = 0;
 boolean done = false;
+//boolean alive = true;
 Tower tow;
 //Enemy e;
+
 void setup() {
   size(1100, 600);
   reader = createReader("map.txt");
@@ -267,12 +272,20 @@ void setup() {
   iceTowers = new ArrayList<IceTower>();
   sniperTowers = new ArrayList<SniperTower>();
   darts = new ArrayList<Dart>();
+  dartPositions = new ArrayList<PVector>();
+  icePositions = new ArrayList<PVector>();
   Iterator<Dart> D = darts.iterator();
 }
 
 void draw() {
   background(255);
   test.display();
+  //if (lives == 0) alive = false;
+  if (lives == 0) {
+    textSize(50);
+    fill(255, 0,0);
+    text("GAME OVER", 300, 300);
+  }
   fill(255);
   stroke(255, 0, 0);
   if (mode == 1) rect(920, 70, 50, 50);
@@ -290,14 +303,16 @@ void draw() {
   //}
   for (DartTower t : dartTowers) {
     t.display(test.getBoard());
-      PVector tp = new PVector( t.x+25, t.y+25);
-      positions.add(tp);
+    PVector tp = new PVector( t.x+25, t.y+25);
+    dartPositions.add(tp);
   }
   for (TackTower t : tackTowers) {
     t.display(test.getBoard());
   }
   for (IceTower t : iceTowers) {
     t.display(test.getBoard());
+    PVector tp = new PVector(t.x+25, t.y+25);
+    icePositions.add(tp);
   }
   for (SniperTower t : sniperTowers) {
     t.display(test.getBoard());
@@ -307,8 +322,9 @@ void draw() {
   fill(0, 0, 0);
   textSize(12);
   text(("Time: "+(millis()%100)), 10, 20);
-  text(("Enemies: "+enemies.size()), 10, 50);
+  text(("Lives: "+lives), 10, 50);
   if (enemies.size() < 5) { //limit to # of enemies on board at once
+    round++;
     spawn();
   }
   for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
@@ -319,17 +335,24 @@ void draw() {
   for (Enemy e : enemies) {
     e.display();
     enemyPos = new PVector(e.x, e.y);
-    for (PVector p : positions) {
+    for (PVector p : dartPositions) {
       if (p.dist(enemyPos) < 200) {
         if (frameCount % 60 == 0) {
           shoot(p.x, p.y, enemyPos.x, enemyPos.y);
 
-          println("positions:" + positions.size());
+          println("positions:" + dartPositions.size());
         }
       }
       //else{
       //  positions = new ArrayList<PVector>();
       //}
+    }
+    for (PVector p : icePositions) {
+      if (p.dist(enemyPos) < 200) {
+        if (frameCount % 60 == 0) {
+          e.col = color(0,0,255);
+        }
+      }
     }
     //println(enemies.size());
     //for (int i = 0; i < darts.size(); i++) {

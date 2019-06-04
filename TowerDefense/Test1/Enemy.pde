@@ -3,6 +3,7 @@ class Enemy extends Thing {
   int value, health, index;
   float speed, xDir, yDir;
   boolean isAlive;
+  color col;
   
 
   Enemy(int x, int y, Tile[] p, float s) {
@@ -14,10 +15,11 @@ class Enemy extends Thing {
     yDir = 1;
     index = 0;
     isAlive = true;
+    col = color(255, 0, 0);
   }
 
   void display() {
-    fill(255, 0, 0);
+    fill(col);
     ellipse(x, y, size, size);
     fill(255);
     //text(("help: "+help+"\ncurrent pos: "+x+", "+y+"\nnext tile: "+path[index+1].getX()+", "+path[index+1].getY()),x-5,y-5);
