@@ -348,11 +348,12 @@ void draw() {
       //}
     }
     for (PVector p : icePositions) {
-      if (p.dist(enemyPos) < 200) {
-        if (frameCount % 60 == 0) {
+      if (p.dist(enemyPos) < 100) {
+        if (frameCount % 100 == 0) {
           e.col = color(0,0,255);
         }
       }
+      //else e.col = color(255,0,0);
     }
     //println(enemies.size());
     //for (int i = 0; i < darts.size(); i++) {
@@ -361,7 +362,7 @@ void draw() {
     //    enemies.remove(0);
     //  }
     //}
-    e.move();
+    if (e.col == color(255,0,0)) e.move();
   }
   Iterator<Dart> D = darts.iterator();
   for (int i = 0; i < darts.size(); i++) {
