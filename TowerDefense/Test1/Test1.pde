@@ -122,6 +122,13 @@ class Map implements Displayable {
   Tile[][] getBoard() {
     return board;
   }
+
+  boolean hasTower(int r, int c) {
+    for (DartTower t : dartTowers) {
+      if (t.x == board[r][c].x && t.y == board[r][c].y) return true;
+    }
+    return false;
+  }
 }
 int s = 0;
 void spawn() {
@@ -138,12 +145,15 @@ void spawnT(int xT, int yT) {
   if (mode == 1) {
     DartTower t = new DartTower(xT, yT);
     dartTowers.add(t);
+    money -= 100;
   } else if (mode == 2) {
     TackTower t = new TackTower(xT, yT);
     tackTowers.add(t);
+    money -= 200;
   } else if (mode == 3) {
     IceTower t = new IceTower(xT, yT);
     iceTowers.add(t);
+    money -= 300;
   } 
   //else if (mode == 4) {
   //  SniperTower t = new SniperTower(xT, yT);
@@ -175,24 +185,25 @@ void removeT(int xT, int yT) {
 
 void mouseClicked() {
   if (lives > 0) {
-    if (mouseX >= 920 && mouseX < 970 && mouseY >= 70 && mouseY < 120) {
-      mode = 1;
-    } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 130 && mouseY < 180) {
-      mode = 2;
-    } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 190 && mouseY < 240) {
-      mode = 3;
-    //} else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
-    //  mode = 4;
-    } else if (mouseX >= 950 && mouseX < 1050 && mouseY >= 450 && mouseY < 550) {
-      mode = 5;
-    }
-    if (mouseButton == LEFT) spawnT(mouseX, mouseY);
-    else if (mouseButton == RIGHT) removeT(mouseX, mouseY);
-    if (mouseButton == LEFT && mode == 5) go();
+    if (mouseButton == LEFT) {
+      if (money >= 100 && mouseX >= 920 && mouseX < 970 && mouseY >= 70 && mouseY < 120) {
+        mode = 1;
+      } else if (money >= 200 && mouseX >= 920 && mouseX < 970 && mouseY >= 130 && mouseY < 180) {
+        mode = 2;
+      } else if (money >= 300 && mouseX >= 920 && mouseX < 970 && mouseY >= 190 && mouseY < 240) {
+        mode = 3;
+        //} else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
+        //  mode = 4;
+      } else if (mouseX >= 950 && mouseX < 1050 && mouseY >= 450 && mouseY < 550) {
+        mode = 5;
+        go();
+      } else spawnT(mouseX, mouseY);
+    } else if (mouseButton == RIGHT) removeT(mouseX, mouseY);
   }
 }
 void go() {
   round = round + 1;
+  //money = money + 100; //this shoudl happen when round ends, not starts
 }
 
 void shoot(float x1, float y1, float x2, float y2, int type) {
@@ -255,14 +266,16 @@ void draw() {
     fill(255, 0, 0);
     text("GAME OVER", 300, 300);
   }
+
   fill(255);
   stroke(255, 0, 0);
   if (mode == 1) rect(920, 70, 50, 50);
   if (mode == 2) rect(920, 130, 50, 50);
   if (mode == 3) rect(920, 190, 50, 50);
   //if (mode == 4) rect(920, 250, 50, 50);
-  if (mode == 5) rect(950,450,100,100);
+  if (mode == 5) rect(950, 450, 100, 100);
   stroke(0);
+
   tow.display();
   image(loadImage("Go.png"), 950, 450, 100, 100);
   //if(!done){
@@ -288,11 +301,19 @@ void draw() {
     PVector tp = new PVector(t.x+25, t.y+25);
     icePositions.add(tp);
   }
+
+  stroke(0);
+  fill(color(255, 0, 0), 180);
+  if (money < 300) rect(920, 190, 50, 50);
+  if (money < 200) rect(920, 130, 50, 50);
+  if (money < 100) rect(920, 70, 50, 50);
+
   //for (SniperTower t : sniperTowers) {
   //  t.display(test.getBoard());
   //}
+
   fill(255);
-  rect(0,0,150,50);
+  rect(0, 0, 150, 50);
   fill(0, 0, 0);
   textSize(12);
   text(("Lives: "+lives), 10, 20);
@@ -302,7 +323,6 @@ void draw() {
     if (lives > 0 && size < 5) { //limit to # of enemies on board at once
       size = size + 1;
       spawn();
-      
     }
   }
   if (size >= 5 && round == 1) {
