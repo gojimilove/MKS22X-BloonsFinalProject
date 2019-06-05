@@ -64,6 +64,7 @@ class DartTower extends Tower {
 }
 
 class TackTower extends Tower {
+  ArrayList<Dart> bullets;
   TackTower(int x, int y) {
     super(x, y);
     img = loadImage("Tack_Shooter.png");
@@ -95,10 +96,7 @@ class TackTower extends Tower {
       ellipse(x+25, y+25, range, range);
     }
   }
-  
-  void shoot() {
-    
-  }
+
 }
 
 class IceTower extends Tower {
@@ -176,15 +174,9 @@ class Dart {
   int size = 10;
   PVector velocity;
   int distTraveled;
-  
-  Dart(float x1, float y1) {
-    start.set(x1, y1);
-    Pos.set(x1, y1);
-    
-    velocity.setMag(speed);
-  }
+  int towerType;
 
-  Dart(float x1, float y1, float x2, float y2,int dist) {
+  Dart(float x1, float y1, float x2, float y2,int dist, int type) {
     start.set(x1, y1);
     Pos.set(x1, y1);
     target.set(x2, y2);
@@ -192,6 +184,8 @@ class Dart {
     velocity = PVector.sub(target, Pos);
     velocity.setMag(speed);
     distTraveled = dist;
+    
+    towerType = type;
   }
   void update() {
     Pos.add(velocity);

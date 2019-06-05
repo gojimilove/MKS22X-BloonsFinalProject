@@ -214,7 +214,6 @@ void removeT(int xT, int yT) {
   }
   //positions.remove(0);
 }
-  
 
 void mouseClicked() {
   if (lives > 0) {
@@ -226,18 +225,20 @@ void mouseClicked() {
       mode = 3;
     } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
       mode = 4;
-    }
-    else if (mouseX >= 950 && mouseX < 1050 && mouseY >= 250 && mouseY < 350) {
+    } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
       mode = 5;
     }
     if (mouseButton == LEFT) spawnT(mouseX, mouseY);
     else if (mouseButton == RIGHT) removeT(mouseX, mouseY);
-    
+    if(mouseButton == LEFT && mode == 5) go();
   }
 }
+void go(){
+  round = round + 1;
+}
 
-void shoot(float x1, float y1, float x2, float y2) {
-  Dart d = new Dart(x1, y1, x2, y2, 0);
+void shoot(float x1, float y1, float x2, float y2, int type) {
+  Dart d = new Dart(x1, y1, x2, y2, 0, type);
   darts.add(d);
 
   //println(d);
@@ -251,6 +252,7 @@ ArrayList<TackTower> tackTowers;
 ArrayList<IceTower> iceTowers;
 ArrayList<SniperTower> sniperTowers;
 ArrayList<PVector> dartPositions;
+ArrayList<PVector> tackPositions;
 ArrayList<PVector> icePositions;
 PVector towerPos;
 PVector enemyPos;
@@ -263,9 +265,6 @@ boolean done = false;
 //boolean alive = true;
 Tower tow;
 //Enemy e;
-void go(){
-  round = round + 1;
-}
 
 void setup() {
   size(1100, 600);
@@ -282,14 +281,13 @@ void setup() {
   darts = new ArrayList<Dart>();
   dartPositions = new ArrayList<PVector>();
   icePositions = new ArrayList<PVector>();
+  tackPositions = new ArrayList<PVector>();
   Iterator<Dart> D = darts.iterator();
 }
 
 void draw() {
   background(255);
   test.display();
-  image(loadImage("Go.png"), 950, 450,100,100);
-  if(mouseButton == LEFT && mode == 5) go();
   //if (lives == 0) alive = false;
   if (lives == 0) {
     textSize(50);
@@ -302,10 +300,9 @@ void draw() {
   if (mode == 2) rect(920, 130, 50, 50);
   if (mode == 3) rect(920, 190, 50, 50);
   if (mode == 4) rect(920, 250, 50, 50);
-  stroke(0,0,0);
-  if (mode == 5) rect(950, 450, 100, 100);
   stroke(0);
   tow.display();
+  image(loadImage("Go.png"), 950, 450,100,100);
   //if(!done){
   //for (int i = 0; i < dartTowers.size(); i++) {
   //  PVector tp = new PVector( dartTowers.get(i).x, dartTowers.get(i).y);
@@ -320,11 +317,15 @@ void draw() {
   }
   for (TackTower t : tackTowers) {
     t.display(test.getBoard());
+    PVector tp = new PVector(t.x+25, t.y+25);
+    tackPositions.add(tp);
+    //if (frameCount % 60 == 0) t.shoot();
   }
   for (IceTower t : iceTowers) {
     t.display(test.getBoard());
     PVector tp = new PVector(t.x+25, t.y+25);
     icePositions.add(tp);
+    
   }
   for (SniperTower t : sniperTowers) {
     t.display(test.getBoard());
@@ -338,66 +339,87 @@ void draw() {
     if (lives > 0 && enemies.size() < 5) { //limit to # of enemies on board at once
       spawn();
     }
-    if (enemies.size() == 5 && round == 1) {
-      done = true;
-    }
+  }
+  if (enemies.size() == 5 && round == 1) {
+    done = true;
   }
 
 
-
-
-    for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
-      if (enemies.get(i).isAlive == false) enemies.remove(i);
-    } 
-    //enemyPos = new PVector(enemies.get(0).x, enemies.get(0).y);    }
-
-    for (Enemy e : enemies) {
-      e.display();
-      enemyPos = new PVector(e.x, e.y);
-      for (PVector p : dartPositions) {
-        if (p.dist(enemyPos) < 200) {
-          if (frameCount % 60 == 0) {
-            shoot(p.x, p.y, enemyPos.x, enemyPos.y);
-            println("positions:" + dartPositions.size());
-          }
+  for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
+    if (enemies.get(i).isAlive == false) enemies.remove(i);
+  } 
+  //enemyPos = new PVector(enemies.get(0).x, enemies.get(0).y);    }
+  int j = 0;
+  for (Enemy e : enemies) {
+    e.display();
+    enemyPos = new PVector(e.x, e.y);
+    for (PVector p : dartPositions) {
+      if (p.dist(enemyPos) < 200) {
+        if (frameCount % 60 == 0) {
+          shoot(p.x, p.y, enemyPos.x, enemyPos.y, 0);
+          //println(":" + dartPositions.size());
         }
       }
-      for (PVector p : icePositions) {
-        if (p.dist(enemyPos) < 100) {
-          if (frameCount % 100 == 0) {
-            e.col = color(0, 0, 255);
-            //if (one_second_has_passed) e.col = color(255, 0, 0);
-          }
+    }
+    for (PVector p : tackPositions) {
+      if (p.dist(enemyPos) < 100) {
+        if (frameCount % 60 == 0) {
+          shoot(p.x, p.y, p.x, p.y+50, 1);
+          shoot(p.x, p.y, p.x+25, p.y+25, 1);
+          shoot(p.x, p.y, p.x+50, p.y, 1);
+          shoot(p.x, p.y, p.x+25, p.y-25, 1);
+          shoot(p.x, p.y, p.x, p.y-50, 1);
+          shoot(p.x, p.y, p.x-25, p.y-25, 1);
+          shoot(p.x, p.y, p.x-50, p.y, 1);
+          shoot(p.x, p.y, p.x-25, p.y+25, 1);
         }
       }
-      if (e.col == color(255, 0, 0)) e.move();
     }
-    Iterator<Dart> D = darts.iterator();
+    for (PVector p : icePositions) {
+      if (p.dist(enemyPos) < 100) {
+        if (frameCount % 100 == 0) {
+          e.col = color(0, 0, 255);
+          //if (one_second_has_passed) e.col = color(255, 0, 0);
+        }
+      }
+    }
     for (int i = 0; i < darts.size(); i++) {
-      if (darts.get(i).Pos.x < 0 || darts.get(i).Pos.x > 900 || darts.get(i).Pos.y > 600 || darts.get(i).Pos.y < 0 ) {
+      if (darts.get(i).Pos.dist(enemyPos) < 10) {
         darts.remove(i);
-        println("darts:" + darts.size());
+        enemies.get(j).isAlive = false;
       }
     }
-
-    for (Dart d : darts) {
-      d.update();
-    }
-    while (D.hasNext()) {
-      Dart dd = D.next();
-      if (dd.distTraveled > 250) {
-        D.remove();
-      }
-    }
-
-    int en = 0;
-    for (int i = 0; i < darts.size(); i++) {
-      if (darts.get(i).Pos.dist(enemyPos) < 5 && en < enemies.size()) {
-        //println(enemies.size());
-        enemies.get(en).isAlive = false;
-        darts.remove(i);
-        en = en + 1;
-      }
-    }
-    
+        
+    if (e.col == color(255, 0, 0)) e.move();
+    j++;
   }
+  Iterator<Dart> D = darts.iterator();
+  for (int i = 0; i < darts.size(); i++) {
+    if (darts.get(i).Pos.x < 0 || darts.get(i).Pos.x > 900 || darts.get(i).Pos.y > 600 || darts.get(i).Pos.y < 0 ) {
+      darts.remove(i);
+      println("darts:" + darts.size());
+    }
+  }
+
+  for (Dart d : darts) {
+    d.update();
+  }
+  while (D.hasNext()) {
+    Dart dd = D.next();
+    if (dd.towerType == 0 && dd.distTraveled > 200) {
+      D.remove();
+    } else if (dd.towerType == 1 && dd.distTraveled > 100) {
+      D.remove();
+    }
+  }
+
+  //int en = 0;
+  //for (int i = 0; i < darts.size(); i++) {
+  //  if (darts.get(i).Pos.dist(enemyPos) < 5 && en < enemies.size()) {
+  //    //println(enemies.size());
+  //    enemies.get(en).isAlive = false;
+  //    darts.remove(i);
+  //    en = en + 1;
+  //  }
+  //}
+}
