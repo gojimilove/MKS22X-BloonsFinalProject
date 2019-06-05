@@ -246,6 +246,7 @@ ArrayList<TackTower> tackTowers;
 ArrayList<IceTower> iceTowers;
 ArrayList<SniperTower> sniperTowers;
 ArrayList<PVector> dartPositions;
+ArrayList<PVector> tackPositions;
 ArrayList<PVector> icePositions;
 PVector towerPos;
 PVector enemyPos;
@@ -274,6 +275,7 @@ void setup() {
   darts = new ArrayList<Dart>();
   dartPositions = new ArrayList<PVector>();
   icePositions = new ArrayList<PVector>();
+  tackPositions = new ArrayList<PVector>();
   Iterator<Dart> D = darts.iterator();
 }
 
@@ -308,11 +310,15 @@ void draw() {
   }
   for (TackTower t : tackTowers) {
     t.display(test.getBoard());
+    PVector tp = new PVector(t.x+25, t.y+25);
+    tackPositions.add(tp);
+    //if (frameCount % 60 == 0) t.shoot();
   }
   for (IceTower t : iceTowers) {
     t.display(test.getBoard());
     PVector tp = new PVector(t.x+25, t.y+25);
     icePositions.add(tp);
+    
   }
   for (SniperTower t : sniperTowers) {
     t.display(test.getBoard());
@@ -322,16 +328,16 @@ void draw() {
   textSize(12);
   text(("Round: "+round), 10, 20);
   text(("Lives: "+lives), 10, 50);
-  if (round  == 1 && !done ){
-  if (lives > 0 && enemies.size() < 5) { //limit to # of enemies on board at once
-    spawn();
+  if (round  == 1 && !done ) {
+    if (lives > 0 && enemies.size() < 5) { //limit to # of enemies on board at once
+      spawn();
+    }
   }
-  }
-  if(enemies.size() == 5 && round == 1){
+  if (enemies.size() == 5 && round == 1) {
     done = true;
   }
-  
-  
+
+
   for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
     if (enemies.get(i).isAlive == false) enemies.remove(i);
   } 
@@ -345,6 +351,20 @@ void draw() {
         if (frameCount % 60 == 0) {
           shoot(p.x, p.y, enemyPos.x, enemyPos.y);
           //println(":" + dartPositions.size());
+        }
+      }
+    }
+    for (PVector p : tackPositions) {
+      if (p.dist(enemyPos) < 100) {
+        if (frameCount % 60 == 0) {
+          shoot(p.x, p.y, p.x, p.y+50);
+          shoot(p.x, p.y, p.x+25, p.y+25);
+          shoot(p.x, p.y, p.x+50, p.y);
+          shoot(p.x, p.y, p.x+25, p.y-25);
+          shoot(p.x, p.y, p.x, p.y-50);
+          shoot(p.x, p.y, p.x-25, p.y-25);
+          shoot(p.x, p.y, p.x-50, p.y);
+          shoot(p.x, p.y, p.x-25, p.y+25);
         }
       }
     }

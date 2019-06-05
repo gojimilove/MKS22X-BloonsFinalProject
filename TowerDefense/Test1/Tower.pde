@@ -68,7 +68,7 @@ class TackTower extends Tower {
     super(x, y);
     img = loadImage("Tack_Shooter.png");
     range = 200;
-    bullets = new ArrayList<Dart>();
+    bullets = new ArrayList<Dart>(); 
   }
 
   void display() {
@@ -98,7 +98,10 @@ class TackTower extends Tower {
   }
   
   void shoot() {
-    
+    bullets.add(new Dart((float)x+25, (float)y+25, (float)x+25, (float)y+75, 0));
+    for (int i = 0; i < bullets.size(); i++) {
+      bullets.get(i).update();
+    }
   }
 }
 
