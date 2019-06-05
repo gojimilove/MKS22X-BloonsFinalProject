@@ -1,10 +1,17 @@
 # MKS22X-BloonsFinalProject
 
 ### Project Summary
-We are making a tower defense game modeled off of Bloons Tower Defense. A player tries to defend a certain place by building towers/monkeys that attack incoming enemies (balloons). There are different types of towers with different attack modes, as well as different types of enemies (some have more lives, some are faster, etc.). Killing enemies will earn you coins, which you can use to build/unlock more towers, but you also gain coins slowly as time passes. You also have a set number of lives, and every time an enemy reaches their objective, you lose a life. If you lose all of your lives, you die.
+Welcome to our tower defense game! Our game is modeled off of Bloons Tower Defense. A player (you) tries to defend a certain place by building towers/monkeys that attack incoming enemies (balloons). There are different types of towers with different abilities. Killing enemies will earn you coins, which you can use to build more towers, but you also gain coins slowly as time passes. You have 5 lives, and every time an enemy reaches the end, you lose a life. If you lose all your lives, you die and the game ends.
 
 ### How to Play
-stuff
+You start with $500. The three different types of towers are displayed on the right hand side of the board. Click on each tower to learn more about them- price, selling price, range, etc. If a tower turns red, that means you do not have enough money to purchase it, but don't worry- you gain money as time passes. \
+Towers:\
+Dart Monkey- shoots darts individually at all enemies within its range.\
+Tack Tower- shoots 8 darts at once. \
+Ice Monkey- temporarily freezes enemies in its range.\\
+Click on a tower to select it, then click a square on the board where you want to place it. You cannot place towers on the path or in the pond. When you have placed all the towers you want, press GO to start the game. You will see the enemies approaching from the top left side of the map. As you kill more enemies and make more money, you can buy more towers. If you want, you can also sell your towers by right clicking on them, and you'll get 75% of the money you spent back.\
+Be careful not to let the enemies reach the end of the path, because if you lose all 5 of your lives, the game ends. When you've killed all the enemies for one round, you can press GO again to begin the next round. There are 10 total rounds- if you make it to the end, you win!\
+Good luck!\
 
 ### Jionghao Wu
 5/20/19: worked in class to make Tile and Map classes, Map fills the board with Tiles (squares) \
