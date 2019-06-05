@@ -13,7 +13,7 @@ Ice Monkey- temporarily freezes enemies in its range.\
 \
 Click on a tower to select it, then click a square on the board where you want to place it. You cannot place towers on the path or in the pond. When you have placed all the towers you want, press GO to start the game. You will see the enemies approaching from the top left side of the map. As you kill more enemies and make more money, you can buy more towers. If you want, you can also sell your towers by right clicking on them, and you'll get 75% of the money you spent back.\
 Be careful not to let the enemies reach the end of the path, because if you lose all 5 of your lives, the game ends. When you've killed all the enemies for one round, you can press GO again to begin the next round. There are 10 total rounds- if you make it to the end, you win!\
-Good luck!\
+Good luck!!
 
 ### Jionghao Wu
 5/20/19: worked in class to make Tile and Map classes, Map fills the board with Tiles (squares) \
