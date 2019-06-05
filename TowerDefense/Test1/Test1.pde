@@ -225,7 +225,7 @@ void mouseClicked() {
       mode = 3;
     } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
       mode = 4;
-    } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
+    } else if (mouseX >= 950 && mouseX < 1050 && mouseY >= 450 && mouseY < 550) {
       mode = 5;
     }
     if (mouseButton == LEFT) spawnT(mouseX, mouseY);
@@ -260,7 +260,7 @@ ArrayList<Dart> darts;
 Iterator<Dart> D;
 int sec=0;
 int lives = 5;
-int round = 1;
+int round = 0;
 boolean done = false;
 //boolean alive = true;
 Tower tow;
@@ -300,6 +300,7 @@ void draw() {
   if (mode == 2) rect(920, 130, 50, 50);
   if (mode == 3) rect(920, 190, 50, 50);
   if (mode == 4) rect(920, 250, 50, 50);
+  if (mode == 5) rect(950,450,100,100);
   stroke(0);
   tow.display();
   image(loadImage("Go.png"), 950, 450,100,100);
