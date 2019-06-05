@@ -130,6 +130,7 @@ void spawn() {
   if (s % 60 == 0) { //if divisible by 100, add an enemy to the list
     Enemy e = new Enemy(25, 125, test.getPath(), 2);
     enemies.add(e);
+    size = size + 1;
   }
 }
 
@@ -244,7 +245,6 @@ void setup() {
 }
 
 void draw() {
-  size = 0;
   background(255);
   test.display();
   //if (lives == 0) alive = false;
@@ -294,18 +294,17 @@ void draw() {
   textSize(12);
   text(("Round: "+round), 10, 20);
   text(("Lives: "+lives), 10, 50);
-  if (round  == 1 && !done ) {
+  if (!done && round == 1) {
     if (lives > 0 && size < 5) { //limit to # of enemies on board at once
-      size = size + 1;
-      spawn();
-      
+          spawn();
     }
-  }
-  if (size >= 5 && round == 1) {
+    if (size >= 5 && round == 1) {
     done = true;
     print(size);
     size = 0;
   }
+  }
+  
   if (round  == 2 && done ) {
     if (lives > 0 && enemies.size() < 8) { //limit to # of enemies on board at once
       spawn();
