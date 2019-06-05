@@ -165,10 +165,12 @@ void spawnT(int xT, int yT) {
     TackTower t = new TackTower(xT, yT);
     tackTowers.add(t);
     money -= 200;
+    tackSpawn = false;
   } else if (mode == 3 && money >= 300) {
     IceTower t = new IceTower(xT, yT);
     iceTowers.add(t);
     money -= 300;
+    iceSpawn = false;
   } 
   //else if (mode == 4) {
   //  SniperTower t = new SniperTower(xT, yT);
@@ -249,6 +251,8 @@ int round = 0;
 int money = 500;
 boolean done = false;
 boolean dartSpawn = false;
+boolean tackSpawn = false;
+boolean iceSpawn = false;
 //boolean alive = true;
 Tower tow;
 //Enemy e;
@@ -304,7 +308,7 @@ void draw() {
   //}
   if(!dartSpawn){
   for (DartTower t : dartTowers) {
-    PVector tp = new PVector( t.x+25, t.y+25);
+    PVector tp = new PVector( t.x, t.y);
     dartPositions.add(tp);
   }
   dartSpawn = true;
@@ -312,16 +316,28 @@ void draw() {
   for (DartTower t : dartTowers) {
      t.display(test.getBoard());
   }
+  
+  if(!tackSpawn){
   for (TackTower t : tackTowers) {
-    t.display(test.getBoard());
-    PVector tp = new PVector(t.x+25, t.y+25);
+    PVector tp = new PVector(t.x, t.y);
     tackPositions.add(tp);
     //if (frameCount % 60 == 0) t.shoot();
   }
+  tackSpawn = true;
+  }
+    for (TackTower t : tackTowers) {
+     t.display(test.getBoard());
+  }
+  
+  if(!iceSpawn){
   for (IceTower t : iceTowers) {
-    t.display(test.getBoard());
-    PVector tp = new PVector(t.x+25, t.y+25);
+    PVector tp = new PVector(t.x, t.y);
     icePositions.add(tp);
+  }
+  iceSpawn = true;
+  }
+    for (IceTower t : iceTowers) {
+     t.display(test.getBoard());
   }
 
   stroke(0);
@@ -458,6 +474,7 @@ void draw() {
       }
     }
     for (PVector p : tackPositions) {
+      enemyPos = new PVector(e.x, e.y);
       if (p.dist(enemyPos) < 100) {
         if (frameCount % 60 == 0) {
           shoot(p.x, p.y, p.x, p.y+50, 1);
@@ -472,6 +489,7 @@ void draw() {
       }
     }
     for (PVector p : icePositions) {
+      enemyPos = new PVector(e.x, e.y);
       if (p.dist(enemyPos) < 100) {
         if (frameCount % 60 == 0) {
           e.col = color(0, 0, 255);
