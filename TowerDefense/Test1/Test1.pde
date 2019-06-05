@@ -321,7 +321,10 @@ void draw() {
 
 
   for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
-    if (enemies.get(i).isAlive == false) enemies.remove(i);
+    if (enemies.get(i).isAlive == false) {
+      enemies.remove(i);
+      money = money + 5;
+    }
   } 
   //enemyPos = new PVector(enemies.get(0).x, enemies.get(0).y);    }
   int j = 0;
