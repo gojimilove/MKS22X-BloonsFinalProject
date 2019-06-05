@@ -54,8 +54,8 @@ class Tile extends Thing {
     return y;
   }
 
-  boolean hasTower() {
-    return hasTower;
+  void hasTower(boolean b) {
+    hasTower = b;
   }
 }
 
@@ -146,15 +146,15 @@ void spawnT(int xT, int yT) {
   if (mode == 1 && money >= 100) {
     DartTower t = new DartTower(xT, yT);
     dartTowers.add(t);
-    money -= 100;
+    money -= t.value;
   } else if (mode == 2 && money >= 200) {
     TackTower t = new TackTower(xT, yT);
     tackTowers.add(t);
-    money -= 200;
+    money -= t.value;
   } else if (mode == 3 && money >= 300) {
     IceTower t = new IceTower(xT, yT);
     iceTowers.add(t);
-    money -= 300;
+    money -= t.value;
   } 
   //else if (mode == 4) {
   //  SniperTower t = new SniperTower(xT, yT);
@@ -167,6 +167,7 @@ void removeT(int xT, int yT) {
     if (xT >= dartTowers.get(i).x && xT < dartTowers.get(i).x+50 && yT >= dartTowers.get(i).y && yT < dartTowers.get(i).y+50) {
       dartTowers.remove(i);
       dartPositions.remove(i);
+      
     }
   }
   for (int i = 0; i < tackTowers.size(); i++) {
@@ -199,7 +200,9 @@ void mouseClicked() {
         mode = 5;
         go();
       } else spawnT(mouseX, mouseY);
-    } else if (mouseButton == RIGHT) removeT(mouseX, mouseY);
+    } else if (mouseButton == RIGHT) {
+      removeT(mouseX, mouseY);
+    }
   }
 }
 void go() {
@@ -311,6 +314,15 @@ void draw() {
   //for (SniperTower t : sniperTowers) {
   //  t.display(test.getBoard());
   //}
+  
+  //for (int i = 0; i < test.getBoard().length; i++) {
+  //  for (int j = 0; j < test.getBoard()[0].length; j++) {
+  //    if (mouseX > test.getTile(i, j).x && mouseX < test.getTile(i, j).x+50 && mouseY > test.getTile(i, j).y && mouseY < test.getTile(i, j).y+50) {
+  //      fill(0, 255);
+  //      text((""+test.getTile(i, j).hasTower), mouseX, mouseY);
+  //    }
+  //  }
+  //}
 
   fill(255);
   rect(0, 0, 150, 50);
@@ -331,7 +343,7 @@ void draw() {
     }
   }
 
-  if (round  == 2 && done ) {
+  if (round  == 2 && done) {
     if (lives > 0 && enemies.size() < 8) { //limit to # of enemies on board at once
       spawn();
     }
@@ -379,7 +391,6 @@ void draw() {
         if (frameCount % 60 == 0) {
           e.col = color(0, 0, 255);
           if (frameCount % 120 == 0) e.col = color(255, 0, 0);
-          //if (one_second_has_passed) e.col = color(255, 0, 0);
         }
       }
     }
