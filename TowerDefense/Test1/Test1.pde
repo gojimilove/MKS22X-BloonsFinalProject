@@ -290,10 +290,42 @@ void draw() {
   }
 
   fill(255);
-  stroke(255, 0, 0);
-  if (mode == 1) rect(920, 70, 50, 50);
-  if (mode == 2) rect(920, 130, 50, 50);
-  if (mode == 3) rect(920, 190, 50, 50);
+  if (mode == 1) {
+    stroke(255,0,0);
+    rect(920, 70, 50, 50);
+    stroke(0);
+    rect(910, 260, 180, 180);
+    fill(0);
+    textSize(14);
+    text("Dart Monkey", 920, 280);
+    textSize(12);
+    text("Price: $100 \nSell Price: $75 \nRange: 200\n\nThrows a single dart at \nnearby bloons. Cheap, \ngood for starting off.", 920, 300);
+    fill(255);
+  }
+  if (mode == 2) {
+    stroke(255,0,0);
+    rect(920, 130, 50, 50);
+    stroke(0);
+    rect(910, 260, 180, 180);
+    fill(0);
+    textSize(14);
+    text("Tack Tower", 920, 280);
+    textSize(12);
+    text("Price: $200 \nSell Price: $150 \nRange: 100\n\nShoots a volley of sharp \ntacks in 8irections.", 920, 300);
+    fill(255);
+  }
+  if (mode == 3) {
+    stroke(255,0,0);
+    rect(920, 190, 50, 50);
+    stroke(0);
+    rect(910, 260, 180, 180);
+    fill(0);
+    textSize(14);
+    text("Ice Monkey", 920, 280);
+    textSize(12);
+    text("Price: $300 \nSell Price: $225 \nRange: 100\n\nFreezes nearby bloons with \nevery pulse.", 920, 300);
+    fill(255);
+  }
   //if (mode == 4) rect(920, 250, 50, 50);
   if (mode == 5) rect(950, 450, 100, 100);
   stroke(0);

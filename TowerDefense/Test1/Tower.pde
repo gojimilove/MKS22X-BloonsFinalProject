@@ -14,17 +14,13 @@ class Tower extends Thing {
     text("Towers:", x, y);
     textSize(14);
     image(loadImage("Dart_Monkey.png"), x, y+20, 50, 50);
-    text("Dart Monkey", x+55, y+40);
-    text("$100", x+55, y+60);
+    text("Dart Monkey", x+55, y+45);
     image(loadImage("Tack_Shooter.png"), x, y+80, 50, 50);
-    text("Tack Shooter", x+55, y+100);
-    text("$200", x+55, y+120);
+    text("Tack Shooter", x+55, y+105);
     image(loadImage("Ice_Tower.png"), x, y+140, 50, 50);
-    text("Ice Tower", x+55, y+160);
-    text("$300", x+55, y+180);
+    text("Ice Monkey", x+55, y+165);
     //image(loadImage("Sniper_Monkey.png"), x, y+200);
     //text("Sniper Monkey", x+55, y+225);
-    
   }
 
   //abstract void shoot();
