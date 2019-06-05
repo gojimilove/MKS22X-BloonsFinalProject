@@ -159,7 +159,8 @@ void spawnT(int xT, int yT) {
   if (mode == 1 && money >= 100) {
     DartTower t = new DartTower(xT, yT);
     dartTowers.add(t);
-    money -= t.value;
+    money -= 100;
+    dartSpawn = false;
   } else if (mode == 2 && money >= 200) {
     TackTower t = new TackTower(xT, yT);
     tackTowers.add(t);
@@ -196,6 +197,7 @@ void removeT(int xT, int yT) {
     }
   }
   //positions.remove(0);
+  
 }
 
 void mouseClicked() {
@@ -249,6 +251,7 @@ int lives = 5;
 int round = 0;
 int money = 500;
 boolean done = false;
+boolean dartSpawn = false;
 //boolean alive = true;
 Tower tow;
 //Enemy e;
@@ -302,10 +305,15 @@ void draw() {
   //}
   //done  =  true;
   //}
+  if(!dartSpawn){
   for (DartTower t : dartTowers) {
-    t.display(test.getBoard());
     PVector tp = new PVector( t.x+25, t.y+25);
     dartPositions.add(tp);
+  }
+  dartSpawn = true;
+  }
+  for (DartTower t : dartTowers) {
+     t.display(test.getBoard());
   }
   for (TackTower t : tackTowers) {
     t.display(test.getBoard());
