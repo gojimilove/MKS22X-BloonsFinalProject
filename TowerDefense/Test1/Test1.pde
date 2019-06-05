@@ -133,12 +133,25 @@ class Map implements Displayable {
 int s = 0;
 void spawn() {
   //int s = millis()%100; //counts up to 100 and starts over
-  s = s + 3;
-  if (s % 60 == 0) { //if divisible by 100, add an enemy to the list
-    Enemy e = new Enemy(25, 125, test.getPath(), 2);
-    enemies.add(e);
-    size = size + 1;
+  if (round <= 5) {
+    s = s + 3;
+    if (s % 60 == 0) { //if divisible by 100, add an enemy to the list
+      Enemy e = new Enemy(25, 125, test.getPath(), 2, color(255, 0, 0), num);
+      enemies.add(e);
+      size = size + 1;
+      num = num + 1;
+    }
   }
+}
+Enemy getSmall(ArrayList<Enemy> r) {
+  Enemy ans= new Enemy(25, 125, test.getPath(), 2, color(255, 0, 0), 100);
+  ;
+  for (int i = 0; i<r.size(); i++) {
+    if (r.get(i).getNumber() < ans.getNumber()) {
+      ans = r.get(i);
+    }
+  }
+  return ans;
 }
 
 int mode = 0;
@@ -240,6 +253,7 @@ boolean done = false;
 Tower tow;
 //Enemy e;
 int size = 0;
+int num = 0;
 
 void setup() {
   size(1100, 600);
@@ -333,7 +347,6 @@ void draw() {
   text(("Round: "+round), 75, 20);
   if (!done && round == 1) {
     if (lives > 0 && size < 5) { //limit to # of enemies on board at once
-      size = size + 1;
       spawn();
     }
     if (size >= 5 && round == 1) {
@@ -347,10 +360,84 @@ void draw() {
     if (lives > 0 && enemies.size() < 8) { //limit to # of enemies on board at once
       spawn();
     }
+    if (size == 8 && round == 2) {
+      done = false;
+      size = 0;
+    }
   }
-  if (enemies.size() == 8 && round == 2) {
-    done = false;
+  if (!done && round  == 3 ) {
+    if (lives > 0 && size < 14) { //limit to # of enemies on board at once
+      spawn();
+    }
+    if (size == 14 && round == 3) {
+      done = true;
+      size = 0;
+    }
   }
+  if (round  == 4 && done ) {
+    if (lives > 0 && size < 20) { //limit to # of enemies on board at once
+      spawn();
+    }
+    if (size == 20 && round == 4) {
+      done = false;
+      size = 0;
+    }
+  }
+  if (round  == 5 && !done ) {
+    if (lives > 0 && size < 30) { //limit to # of enemies on board at once
+      spawn();
+    }
+    if (size == 30 && round == 5) {
+      done = true;
+      size = 0;
+    }
+  }
+  if (round  == 6 && done ) {
+    if (lives > 0 && size < 30) { //limit to # of enemies on board at once
+      spawn();
+    }
+    if (size == 30 && round == 6) {
+      done = false;
+      size = 0;
+    }
+  }
+  if (round  == 7 && !done ) {
+    if (lives > 0 && size < 35) { //limit to # of enemies on board at once
+      spawn();
+    }
+    if (size == 35 && round == 7) {
+      done = true;
+      size = 0;
+    }
+  }
+  if (round  == 8 && done ) {
+    if (lives > 0 && size < 40) { //limit to # of enemies on board at once
+      spawn();
+    }
+    if (size == 40 && round == 8) {
+      done = false;
+      size = 0;
+    }
+  }
+  if (round  == 9 && !done ) {
+    if (lives > 0 && size < 45) { //limit to # of enemies on board at once
+      spawn();
+    }
+    if (size == 45 && round == 9) {
+      done = true;
+      size = 0;
+    }
+  }
+  if (round  == 10 && done ) {
+    if (lives > 0 && size < 50) { //limit to # of enemies on board at once
+      spawn();
+    }
+    if (size == 50 && round == 10) {
+      done = false;
+      size = 0;
+    }
+  }
+
 
 
   for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
@@ -361,12 +448,14 @@ void draw() {
   } 
   //enemyPos = new PVector(enemies.get(0).x, enemies.get(0).y);    }
   int j = 0;
+
   for (Enemy e : enemies) {
     e.display();
-    enemyPos = new PVector(e.x, e.y);
+    
     for (PVector p : dartPositions) {
+      enemyPos = new PVector(e.x, e.y);
       if (p.dist(enemyPos) < 200) {
-        if (frameCount % 60 == 0) {
+        if (frameCount % 80 == 0) {
           shoot(p.x, p.y, enemyPos.x, enemyPos.y, 0);
           //println(":" + dartPositions.size());
         }
@@ -395,7 +484,7 @@ void draw() {
       }
     }
     for (int i = 0; i < darts.size(); i++) {
-      if (darts.get(i).Pos.dist(enemyPos) < 10) {
+      if (darts.get(i).Pos.dist(enemyPos) < 12) {
         darts.remove(i);
         enemies.get(j).isAlive = false;
       }
@@ -404,20 +493,22 @@ void draw() {
     if (e.col == color(255, 0, 0)) e.move();
     j++;
   }
+  println(enemies.size());
+
   Iterator<Dart> D = darts.iterator();
-  for (int i = 0; i < darts.size(); i++) {
-    if (darts.get(i).Pos.x < 0 || darts.get(i).Pos.x > 900 || darts.get(i).Pos.y > 600 || darts.get(i).Pos.y < 0 ) {
-      darts.remove(i);
-      println("darts:" + darts.size());
-    }
-  }
+  //for (int i = 0; i < darts.size(); i++) {
+  //  if (darts.get(i).Pos.x < 0 || darts.get(i).Pos.x > 900 || darts.get(i).Pos.y > 600 || darts.get(i).Pos.y < 0 ) {
+  //    darts.remove(i);
+  //    println("darts:" + darts.size());
+  //  }
+  //}
 
   for (Dart d : darts) {
     d.update();
   }
   while (D.hasNext()) {
     Dart dd = D.next();
-    if (dd.towerType == 0 && dd.distTraveled > 200) {
+    if (dd.towerType == 0 && dd.distTraveled > 300) {
       D.remove();
     } else if (dd.towerType == 1 && dd.distTraveled > 100) {
       D.remove();
