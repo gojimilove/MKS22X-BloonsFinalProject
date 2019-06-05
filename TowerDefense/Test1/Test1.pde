@@ -417,7 +417,7 @@ void draw() {
     }
     if (size >= 5 && round == 1) {
       done = true;
-      print(size);
+      //print(size);
       size = 0;
     }
   }
@@ -564,14 +564,14 @@ void draw() {
     if (e.col == color(255, 0, 0)) e.move(); //pnly move when red (freeze when blue)
     j++;
   }
-  println(enemies.size());
+  //println(enemies.size());
 
   // darts move
   Iterator<Dart> D = darts.iterator();
   //for (int i = 0; i < darts.size(); i++) {
   //  if (darts.get(i).Pos.x < 0 || darts.get(i).Pos.x > 900 || darts.get(i).Pos.y > 600 || darts.get(i).Pos.y < 0 ) {
   //    darts.remove(i);
-  //    println("darts:" + darts.size());
+  //    ln("darts:" + darts.size());
   //  }
   //}
 
