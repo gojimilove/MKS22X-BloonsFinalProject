@@ -159,7 +159,7 @@ void spawnT(int xT, int yT) {
   if (mode == 1 && money >= 100) {
     DartTower t = new DartTower(xT, yT);
     dartTowers.add(t);
-    money -= 100;
+    money -= t.value;
     dartSpawn = false;
   } else if (mode == 2 && money >= 200) {
     TackTower t = new TackTower(xT, yT);
@@ -181,19 +181,21 @@ void removeT(int xT, int yT) {
     if (xT >= dartTowers.get(i).x && xT < dartTowers.get(i).x+50 && yT >= dartTowers.get(i).y && yT < dartTowers.get(i).y+50) {
       dartTowers.remove(i);
       dartPositions.remove(i);
-      
+      money += 75;
     }
   }
   for (int i = 0; i < tackTowers.size(); i++) {
     if (xT >= tackTowers.get(i).x && xT < tackTowers.get(i).x+50 && yT >= tackTowers.get(i).y && yT < tackTowers.get(i).y+50) {
       tackTowers.remove(i);
       tackPositions.remove(i);
+      money += 150;
     }
   }
   for (int i = 0; i < iceTowers.size(); i++) {
     if (xT >= iceTowers.get(i).x && xT < iceTowers.get(i).x+50 && yT >= iceTowers.get(i).y && yT < iceTowers.get(i).y+50) {
       iceTowers.remove(i);
       icePositions.remove(i);
+      money += 225;
     }
   }
   //positions.remove(0);
