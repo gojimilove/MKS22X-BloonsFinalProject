@@ -341,11 +341,11 @@ void draw() {
   text(("Round: "+round), 10, 20);
   text(("Lives: "+lives), 10, 50);
   if (round  == 1 && !done ) {
-    if (lives > 0 && enemies.size() < 10) { //limit to # of enemies on board at once
+    if (lives > 0 && enemies.size() < 5) { //limit to # of enemies on board at once
       spawn();
     }
   }
-  if (enemies.size() == 10 && round == 1) {
+  if (enemies.size() == 5 && round == 1) {
     done = true;
   }
 
@@ -382,8 +382,9 @@ void draw() {
     }
     for (PVector p : icePositions) {
       if (p.dist(enemyPos) < 100) {
-        if (frameCount % 100 == 0) {
+        if (frameCount % 60 == 0) {
           e.col = color(0, 0, 255);
+          if (frameCount % 120 == 0) e.col = color(255, 0, 0);
           //if (one_second_has_passed) e.col = color(255, 0, 0);
         }
       }
