@@ -207,10 +207,22 @@ void spawnT(int xT, int yT) {
 
 void removeT(int xT, int yT) {
   for (int i = 0; i < dartTowers.size(); i++) {
-    if (xT >= dartTowers.get(i).x && xT < dartTowers.get(i).x+50 && yT >= dartTowers.get(i).y && yT < dartTowers.get(i).y+50) dartTowers.remove(i);
+    if (xT >= dartTowers.get(i).x && xT < dartTowers.get(i).x+50 && yT >= dartTowers.get(i).y && yT < dartTowers.get(i).y+50) {
+      dartTowers.remove(i);
+      dartPositions.remove(i);
+    }
   }
   for (int i = 0; i < tackTowers.size(); i++) {
-    if (xT >= tackTowers.get(i).x && xT < tackTowers.get(i).x+50 && yT >= tackTowers.get(i).y && yT < tackTowers.get(i).y+50) tackTowers.remove(i);
+    if (xT >= tackTowers.get(i).x && xT < tackTowers.get(i).x+50 && yT >= tackTowers.get(i).y && yT < tackTowers.get(i).y+50) {
+      tackTowers.remove(i);
+      tackPositions.remove(i);
+    }
+  }
+  for (int i = 0; i < iceTowers.size(); i++) {
+    if (xT >= iceTowers.get(i).x && xT < iceTowers.get(i).x+50 && yT >= iceTowers.get(i).y && yT < iceTowers.get(i).y+50) {
+      iceTowers.remove(i);
+      icePositions.remove(i);
+    }
   }
   //positions.remove(0);
 }
@@ -329,11 +341,11 @@ void draw() {
   text(("Round: "+round), 10, 20);
   text(("Lives: "+lives), 10, 50);
   if (round  == 1 && !done ) {
-    if (lives > 0 && enemies.size() < 5) { //limit to # of enemies on board at once
+    if (lives > 0 && enemies.size() < 10) { //limit to # of enemies on board at once
       spawn();
     }
   }
-  if (enemies.size() == 5 && round == 1) {
+  if (enemies.size() == 10 && round == 1) {
     done = true;
   }
 
