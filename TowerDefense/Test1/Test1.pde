@@ -92,8 +92,8 @@ class Map implements Displayable {
         //x = 17;
         //y = 11;
         //g = 1;
-        board[x][y] = new Tile(x*50, y*50, 50, 'n', color(180), g);
-        path[r] = new Tile(x*50, y*50, 50, 'n', color(180), g);
+        board[x][y] = new Tile(x*50, y*50, 50, 'n', color(200), g);
+        path[r] = new Tile(x*50, y*50, 50, 'n', color(200), g);
         r++;
       }
     }
@@ -296,6 +296,7 @@ void draw() {
     fill(255, 0, 0);
     text("GAME OVER", 300, 300);
   }
+  image(loadImage("flag2.png"), 0,500,50,50);
 
   fill(255);
   if (mode == 1) { //dart tower selected, display dart tower facts
