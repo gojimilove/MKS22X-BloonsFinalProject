@@ -187,10 +187,10 @@ void mouseClicked() {
     }
     if (mouseButton == LEFT) spawnT(mouseX, mouseY);
     else if (mouseButton == RIGHT) removeT(mouseX, mouseY);
-    if(mouseButton == LEFT && mode == 5) go();
+    if (mouseButton == LEFT && mode == 5) go();
   }
 }
-void go(){
+void go() {
   round = round + 1;
 }
 
@@ -222,6 +222,7 @@ boolean done = false;
 //boolean alive = true;
 Tower tow;
 //Enemy e;
+int size = 0;
 
 void setup() {
   size(1100, 600);
@@ -243,6 +244,7 @@ void setup() {
 }
 
 void draw() {
+  size = 0;
   background(255);
   test.display();
   //if (lives == 0) alive = false;
@@ -257,10 +259,10 @@ void draw() {
   if (mode == 2) rect(920, 130, 50, 50);
   if (mode == 3) rect(920, 190, 50, 50);
   if (mode == 4) rect(920, 250, 50, 50);
-  if (mode == 5) rect(950,450,100,100);
+  if (mode == 5) rect(950, 450, 100, 100);
   stroke(0);
   tow.display();
-  image(loadImage("Go.png"), 950, 450,100,100);
+  image(loadImage("Go.png"), 950, 450, 100, 100);
   //if(!done){
   //for (int i = 0; i < dartTowers.size(); i++) {
   //  PVector tp = new PVector( dartTowers.get(i).x, dartTowers.get(i).y);
@@ -283,7 +285,6 @@ void draw() {
     t.display(test.getBoard());
     PVector tp = new PVector(t.x+25, t.y+25);
     icePositions.add(tp);
-    
   }
   for (SniperTower t : sniperTowers) {
     t.display(test.getBoard());
@@ -294,12 +295,24 @@ void draw() {
   text(("Round: "+round), 10, 20);
   text(("Lives: "+lives), 10, 50);
   if (round  == 1 && !done ) {
-    if (lives > 0 && enemies.size() < 5) { //limit to # of enemies on board at once
+    if (lives > 0 && size < 5) { //limit to # of enemies on board at once
+      size = size + 1;
+      spawn();
+      
+    }
+  }
+  if (size >= 5 && round == 1) {
+    done = true;
+    print(size);
+    size = 0;
+  }
+  if (round  == 2 && done ) {
+    if (lives > 0 && enemies.size() < 8) { //limit to # of enemies on board at once
       spawn();
     }
   }
-  if (enemies.size() == 5 && round == 1) {
-    done = true;
+  if (enemies.size() == 8 && round == 2) {
+    done = false;
   }
 
 
@@ -348,7 +361,7 @@ void draw() {
         enemies.get(j).isAlive = false;
       }
     }
-        
+
     if (e.col == color(255, 0, 0)) e.move();
     j++;
   }
