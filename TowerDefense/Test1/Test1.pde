@@ -237,10 +237,16 @@ void mouseClicked() {
       mode = 3;
     } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
       mode = 4;
+    } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
+      mode = 5;
     }
     if (mouseButton == LEFT) spawnT(mouseX, mouseY);
     else if (mouseButton == RIGHT) removeT(mouseX, mouseY);
+    if(mouseButton == LEFT && mode == 5) go();
   }
+}
+void go(){
+  round = round + 1;
 }
 
 void shoot(float x1, float y1, float x2, float y2, int type) {
@@ -308,6 +314,7 @@ void draw() {
   if (mode == 4) rect(920, 250, 50, 50);
   stroke(0);
   tow.display();
+  image(loadImage("Go.png"), 950, 450,100,100);
   //if(!done){
   //for (int i = 0; i < dartTowers.size(); i++) {
   //  PVector tp = new PVector( dartTowers.get(i).x, dartTowers.get(i).y);

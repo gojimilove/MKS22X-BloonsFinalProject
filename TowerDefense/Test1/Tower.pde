@@ -21,6 +21,7 @@ class Tower extends Thing {
     text("Ice Tower", x+55, y+165);
     image(loadImage("Sniper_Monkey.png"), x, y+200);
     text("Sniper Monkey", x+55, y+225);
+    
   }
 
   //abstract void shoot();
