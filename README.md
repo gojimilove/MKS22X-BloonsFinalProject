@@ -17,6 +17,8 @@ stuff
 5/29/19: created dart class and the towers shoot something, not correctly but shoots \
 5/30/19: worked on shooting (together), continued working on darts since it caused a lot of lag, had many errors and exceptions \
 5/31/19: shooting now pops some enemies lagging is still a problem but continue to troubleshoot \
+6/3/19: figured out how to reduce the lag cause by the darts, yet there is still lag as the game proceeds\
+6/4/19: adding rounds to the game, fixing the lag from oversized arraylists,adding water, adding go button, fixing spawning problems. Most towers work as they are supposed to but in the end could not fix the dart tower to shoot one dart 
 
 
 
