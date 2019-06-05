@@ -13,7 +13,12 @@ stuff
 5/23/19: added accessor methods to tile and map to be able to display the path tiles on the screen (worked on the same computer) \
 5/24/19: worked on movement of enemy class, making sure it moves along the path \
 5/25/19: worked on the same computer to figure out the movement of the enemy class once a while gets a weird error \
-5/28/19: worked on learning the vectors stuff in order to figure out the shooting part of the game need to update distances between stuff every time \
+5/28/19: worked on learning the vectors stuff in order to figure out the shooting part of the game need to update distances between stuff every time, also added png files and fixed spawn rates for enemy \
+5/29/19: created dart class and the towers shoot something, not correctly but shoots \
+5/30/19: worked on shooting (together), continued working on darts since it caused a lot of lag, had many errors and exceptions \
+5/31/19: shooting now pops some enemies lagging is still a problem but continue to troubleshoot \
+
+
 
 ### Jessica Kim
 5/20/19: added interfaces Displayable and Detectable (commented out), added abstract class Thing, added classes Tile and Map, map display fills the board with tiles that have assigned colors, sizes (50x50), and direction (wasd, will do something with direction later) \
