@@ -145,10 +145,11 @@ void spawnT(int xT, int yT) {
   } else if (mode == 3) {
     IceTower t = new IceTower(xT, yT);
     iceTowers.add(t);
-  } else if (mode == 4) {
-    SniperTower t = new SniperTower(xT, yT);
-    sniperTowers.add(t);
-  }
+  } 
+  //else if (mode == 4) {
+  //  SniperTower t = new SniperTower(xT, yT);
+  //  sniperTowers.add(t);
+  //}
 }
 
 void removeT(int xT, int yT) {
@@ -181,8 +182,8 @@ void mouseClicked() {
       mode = 2;
     } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 190 && mouseY < 240) {
       mode = 3;
-    } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
-      mode = 4;
+    //} else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
+    //  mode = 4;
     } else if (mouseX >= 950 && mouseX < 1050 && mouseY >= 450 && mouseY < 550) {
       mode = 5;
     }
@@ -208,7 +209,7 @@ ArrayList<Enemy> enemies;
 ArrayList<DartTower> dartTowers;
 ArrayList<TackTower> tackTowers;
 ArrayList<IceTower> iceTowers;
-ArrayList<SniperTower> sniperTowers;
+//ArrayList<SniperTower> sniperTowers;
 ArrayList<PVector> dartPositions;
 ArrayList<PVector> tackPositions;
 ArrayList<PVector> icePositions;
@@ -219,6 +220,7 @@ Iterator<Dart> D;
 int sec=0;
 int lives = 5;
 int round = 0;
+int money = 500;
 boolean done = false;
 //boolean alive = true;
 Tower tow;
@@ -236,7 +238,7 @@ void setup() {
   dartTowers = new ArrayList<DartTower>();
   tackTowers = new ArrayList<TackTower>();
   iceTowers = new ArrayList<IceTower>();
-  sniperTowers = new ArrayList<SniperTower>();
+  //sniperTowers = new ArrayList<SniperTower>();
   darts = new ArrayList<Dart>();
   dartPositions = new ArrayList<PVector>();
   icePositions = new ArrayList<PVector>();
@@ -258,8 +260,8 @@ void draw() {
   if (mode == 1) rect(920, 70, 50, 50);
   if (mode == 2) rect(920, 130, 50, 50);
   if (mode == 3) rect(920, 190, 50, 50);
-  if (mode == 4) rect(920, 250, 50, 50);
-  if (mode == 5) rect(950, 450, 100, 100);
+  //if (mode == 4) rect(920, 250, 50, 50);
+  if (mode == 5) rect(950,450,100,100);
   stroke(0);
   tow.display();
   image(loadImage("Go.png"), 950, 450, 100, 100);
@@ -286,14 +288,16 @@ void draw() {
     PVector tp = new PVector(t.x+25, t.y+25);
     icePositions.add(tp);
   }
-  for (SniperTower t : sniperTowers) {
-    t.display(test.getBoard());
-  }
-
+  //for (SniperTower t : sniperTowers) {
+  //  t.display(test.getBoard());
+  //}
+  fill(255);
+  rect(0,0,150,50);
   fill(0, 0, 0);
   textSize(12);
-  text(("Round: "+round), 10, 20);
-  text(("Lives: "+lives), 10, 50);
+  text(("Lives: "+lives), 10, 20);
+   text(("$"+money), 10, 40);
+  text(("Round: "+round), 75, 20);
   if (!done && round == 1) {
     if (lives > 0 && size < 5) { //limit to # of enemies on board at once
           spawn();
