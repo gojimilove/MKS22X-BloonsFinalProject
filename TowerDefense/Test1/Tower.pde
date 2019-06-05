@@ -173,7 +173,7 @@ class Dart {
   PVector Pos = new PVector();
   PVector target = new PVector();
   PVector start = new PVector();
-  float speed = 10;
+  float speed = 7;
   int size = 10;
   PVector velocity;
   int distTraveled;
