@@ -143,15 +143,15 @@ void spawn() {
 
 int mode = 0;
 void spawnT(int xT, int yT) {
-  if (mode == 1) {
+  if (mode == 1 && money >= 100) {
     DartTower t = new DartTower(xT, yT);
     dartTowers.add(t);
     money -= 100;
-  } else if (mode == 2) {
+  } else if (mode == 2 && money >= 200) {
     TackTower t = new TackTower(xT, yT);
     tackTowers.add(t);
     money -= 200;
-  } else if (mode == 3) {
+  } else if (mode == 3 && money >= 300) {
     IceTower t = new IceTower(xT, yT);
     iceTowers.add(t);
     money -= 300;
@@ -317,24 +317,20 @@ void draw() {
   fill(0, 0, 0);
   textSize(12);
   text(("Lives: "+lives), 10, 20);
-   text(("$"+money), 10, 40);
+  text(("$"+money), 10, 40);
   text(("Round: "+round), 75, 20);
   if (!done && round == 1) {
     if (lives > 0 && size < 5) { //limit to # of enemies on board at once
-<<<<<<< HEAD
       size = size + 1;
       spawn();
-=======
-          spawn();
->>>>>>> 60392e627b95cf9e6d4eaf568c80ed13dd0657ed
     }
     if (size >= 5 && round == 1) {
-    done = true;
-    print(size);
-    size = 0;
+      done = true;
+      print(size);
+      size = 0;
+    }
   }
-  }
-  
+
   if (round  == 2 && done ) {
     if (lives > 0 && enemies.size() < 8) { //limit to # of enemies on board at once
       spawn();
