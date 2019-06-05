@@ -101,12 +101,12 @@ class Map implements Displayable {
       e.printStackTrace();
       line = null;
     }
-    board[9][7] = new Tile(9*50, 7*50, 50, 'n', color(0,0,255), -2);
-    board[9][8] = new Tile(9*50, 8*50, 50, 'n', color(0,0,255), -2);
-    board[10][7] = new Tile(10*50, 7*50, 50, 'n', color(0,0,255), -2);
-    board[10][8] = new Tile(10*50, 8*50, 50, 'n', color(0,0,255), -2);
-    board[11][7] = new Tile(11*50, 7*50, 50, 'n', color(0,0,255), -2);
-    board[11][8] = new Tile(11*50, 8*50, 50, 'n', color(0,0,255), -2);
+    board[9][7] = new Tile(9*50, 7*50, 50, 'n', color(0, 0, 255), -2);
+    board[9][8] = new Tile(9*50, 8*50, 50, 'n', color(0, 0, 255), -2);
+    board[10][7] = new Tile(10*50, 7*50, 50, 'n', color(0, 0, 255), -2);
+    board[10][8] = new Tile(10*50, 8*50, 50, 'n', color(0, 0, 255), -2);
+    board[11][7] = new Tile(11*50, 7*50, 50, 'n', color(0, 0, 255), -2);
+    board[11][8] = new Tile(11*50, 8*50, 50, 'n', color(0, 0, 255), -2);
   }
 
   void display() {
@@ -206,7 +206,6 @@ void removeT(int xT, int yT) {
     }
   }
   //positions.remove(0);
-  
 }
 
 void mouseClicked() {
@@ -296,11 +295,11 @@ void draw() {
     fill(255, 0, 0);
     text("GAME OVER", 300, 300);
   }
-  image(loadImage("flag2.png"), 0,500,50,50);
-
+  //image(loadImage("flag2.png"), 0, 500, 50, 50);
+  if (frameCount % 180 == 0) money += 5;
   fill(255);
   if (mode == 1) { //dart tower selected, display dart tower facts
-    stroke(255,0,0);
+    stroke(255, 0, 0);
     rect(920, 70, 50, 50);
     stroke(0);
     rect(910, 260, 180, 180);
@@ -312,7 +311,7 @@ void draw() {
     fill(255);
   }
   if (mode == 2) { //tack tower selected
-    stroke(255,0,0);
+    stroke(255, 0, 0);
     rect(920, 130, 50, 50);
     stroke(0);
     rect(910, 260, 180, 180);
@@ -324,7 +323,7 @@ void draw() {
     fill(255);
   }
   if (mode == 3) { //ice tower selected
-    stroke(255,0,0);
+    stroke(255, 0, 0);
     rect(920, 190, 50, 50);
     stroke(0);
     rect(910, 260, 180, 180);
@@ -348,38 +347,40 @@ void draw() {
   //}
   //done  =  true;
   //}
-  if(!dartSpawn){ //keeps it from spawning darts even when tower is removed
+  if (!dartSpawn) { //keeps it from spawning darts even when tower is removed
+    for (DartTower t : dartTowers) {
+      PVector tp = new PVector( t.x, t.y);
+      dartPositions.add(tp);
+    }
+    dartSpawn = true;
+  }
   for (DartTower t : dartTowers) {
-    PVector tp = new PVector( t.x, t.y);
-    dartPositions.add(tp);
+    t.display(test.getBoard()); //display dart towers
   }
-  dartSpawn = true;
-  }
-  for (DartTower t : dartTowers) {
-     t.display(test.getBoard()); //display dart towers
-  }
-  
-  if(!tackSpawn){
-  for (TackTower t : tackTowers) {
-    PVector tp = new PVector(t.x, t.y);
-    tackPositions.add(tp);
-    //if (frameCount % 60 == 0) t.shoot();
-  }
-  tackSpawn = true;
-  }
+
+  if (!tackSpawn) {
     for (TackTower t : tackTowers) {
-     t.display(test.getBoard()); //display tack towers
+      PVector tp = new PVector(t.x, t.y);
+      tackPositions.add(tp);
+      //if (frameCount % 60 == 0) t.shoot();
+    }
+    tackSpawn = true;
   }
-  
-  if(!iceSpawn){
+  for (TackTower t : tackTowers) {
+    t.display(test.getBoard()); //display tack towers
+  }
+
+  //if (!iceSpawn) {
+  //  for (IceTower t : iceTowers) {
+  //    PVector tp = new PVector(t.x, t.y);
+  //    icePositions.add(tp);
+  //  }
+  //  iceSpawn = true;
+  //}
   for (IceTower t : iceTowers) {
+    t.display(test.getBoard()); //display ice towers
     PVector tp = new PVector(t.x, t.y);
     icePositions.add(tp);
-  }
-  iceSpawn = true;
-  }
-    for (IceTower t : iceTowers) {
-     t.display(test.getBoard()); //display ice towers
   }
 
   stroke(0);
@@ -392,7 +393,7 @@ void draw() {
   //for (SniperTower t : sniperTowers) {
   //  t.display(test.getBoard());
   //}
-  
+
   //for (int i = 0; i < test.getBoard().length; i++) {
   //  for (int j = 0; j < test.getBoard()[0].length; j++) {
   //    if (mouseX > test.getTile(i, j).x && mouseX < test.getTile(i, j).x+50 && mouseY > test.getTile(i, j).y && mouseY < test.getTile(i, j).y+50) {
@@ -410,7 +411,7 @@ void draw() {
   text(("Lives: "+lives), 10, 20);
   text(("$"+money), 10, 40);
   text(("Round: "+round), 75, 20);
-  
+
   //10 different rounds
   if (!done && round == 1) {
     if (lives > 0 && size < 5) { //limit to # of enemies on board at once
@@ -579,11 +580,11 @@ void draw() {
   for (Dart d : darts) {
     d.update();
   }
-  
+
   //check to see if dart is out of range
   while (D.hasNext()) {
     Dart dd = D.next();
-    if (dd.towerType == 0 && dd.distTraveled > 300) {
+    if (dd.towerType == 0 && dd.distTraveled > 200) {
       D.remove();
     } else if (dd.towerType == 1 && dd.distTraveled > 100) {
       D.remove();
