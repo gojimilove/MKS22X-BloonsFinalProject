@@ -204,7 +204,7 @@ void removeT(int xT, int yT) {
 }
 
 void mouseClicked() {
-  if (lives > 0) {
+  if (lives > 0 && !(mouseX >= 450 && mouseX <600) && !(mouseY >=350 && mouseY < 450)) {
     if (mouseButton == LEFT) {
       if (money >= 100 && mouseX >= 920 && mouseX < 970 && mouseY >= 70 && mouseY < 120) {
         mode = 1;
@@ -551,4 +551,6 @@ void draw() {
   //    en = en + 1;
   //  }
   //}
+  fill(0,0,255);
+  rect(450,350,150,100);
 }
