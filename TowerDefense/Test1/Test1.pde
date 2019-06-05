@@ -101,6 +101,12 @@ class Map implements Displayable {
       e.printStackTrace();
       line = null;
     }
+    board[9][7] = new Tile(9*50, 7*50, 50, 'n', color(0,0,255), -2);
+    board[9][8] = new Tile(9*50, 8*50, 50, 'n', color(0,0,255), -2);
+    board[10][7] = new Tile(10*50, 7*50, 50, 'n', color(0,0,255), -2);
+    board[10][8] = new Tile(10*50, 8*50, 50, 'n', color(0,0,255), -2);
+    board[11][7] = new Tile(11*50, 7*50, 50, 'n', color(0,0,255), -2);
+    board[11][8] = new Tile(11*50, 8*50, 50, 'n', color(0,0,255), -2);
   }
 
   void display() {
@@ -204,7 +210,7 @@ void removeT(int xT, int yT) {
 }
 
 void mouseClicked() {
-  if (lives > 0 && !(mouseX >= 450 && mouseX <600) && !(mouseY >=350 && mouseY < 450)) {
+  if (lives > 0) {
     if (mouseButton == LEFT) {
       if (money >= 100 && mouseX >= 920 && mouseX < 970 && mouseY >= 70 && mouseY < 120) {
         mode = 1;
@@ -285,15 +291,14 @@ void setup() {
 void draw() {
   background(255);
   test.display();
-  //if (lives == 0) alive = false;
-  if (lives == 0) {
+  if (lives == 0) { //run out of lives- game ends
     textSize(50);
     fill(255, 0, 0);
     text("GAME OVER", 300, 300);
   }
 
   fill(255);
-  if (mode == 1) {
+  if (mode == 1) { //dart tower selected, display dart tower facts
     stroke(255,0,0);
     rect(920, 70, 50, 50);
     stroke(0);
@@ -305,7 +310,7 @@ void draw() {
     text("Price: $100 \nSell Price: $75 \nRange: 200\n\nThrows a single dart at \nnearby bloons. Cheap, \ngood for starting off.", 920, 300);
     fill(255);
   }
-  if (mode == 2) {
+  if (mode == 2) { //tack tower selected
     stroke(255,0,0);
     rect(920, 130, 50, 50);
     stroke(0);
@@ -317,7 +322,7 @@ void draw() {
     text("Price: $200 \nSell Price: $150 \nRange: 100\n\nShoots a volley of sharp \ntacks in 8irections.", 920, 300);
     fill(255);
   }
-  if (mode == 3) {
+  if (mode == 3) { //ice tower selected
     stroke(255,0,0);
     rect(920, 190, 50, 50);
     stroke(0);
@@ -329,12 +334,12 @@ void draw() {
     text("Price: $300 \nSell Price: $225 \nRange: 100\n\nFreezes nearby bloons with \nevery pulse.", 920, 300);
     fill(255);
   }
-  //if (mode == 4) rect(920, 250, 50, 50);
-  if (mode == 5) rect(950, 450, 100, 100);
+  //if (mode == 4) rect(920, 250, 50, 50); //no more sniper
+  if (mode == 5) rect(950, 450, 100, 100); //go button pressed
   stroke(0);
 
   tow.display();
-  image(loadImage("Go.png"), 950, 450, 100, 100);
+  image(loadImage("Go.png"), 950, 450, 100, 100); //go button
   //if(!done){
   //for (int i = 0; i < dartTowers.size(); i++) {
   //  PVector tp = new PVector( dartTowers.get(i).x, dartTowers.get(i).y);
@@ -342,7 +347,7 @@ void draw() {
   //}
   //done  =  true;
   //}
-  if(!dartSpawn){
+  if(!dartSpawn){ //keeps it from spawning darts even when tower is removed
   for (DartTower t : dartTowers) {
     PVector tp = new PVector( t.x, t.y);
     dartPositions.add(tp);
@@ -350,7 +355,7 @@ void draw() {
   dartSpawn = true;
   }
   for (DartTower t : dartTowers) {
-     t.display(test.getBoard());
+     t.display(test.getBoard()); //display dart towers
   }
   
   if(!tackSpawn){
@@ -362,7 +367,7 @@ void draw() {
   tackSpawn = true;
   }
     for (TackTower t : tackTowers) {
-     t.display(test.getBoard());
+     t.display(test.getBoard()); //display tack towers
   }
   
   if(!iceSpawn){
@@ -373,11 +378,12 @@ void draw() {
   iceSpawn = true;
   }
     for (IceTower t : iceTowers) {
-     t.display(test.getBoard());
+     t.display(test.getBoard()); //display ice towers
   }
 
   stroke(0);
   fill(color(255, 0, 0), 180);
+  //if can't afford tower, it gets covered by a red square
   if (money < 300) rect(920, 190, 50, 50);
   if (money < 200) rect(920, 130, 50, 50);
   if (money < 100) rect(920, 70, 50, 50);
@@ -395,6 +401,7 @@ void draw() {
   //  }
   //}
 
+  //top left hand corner shows # of lives, current round, and amount of $ player has
   fill(255);
   rect(0, 0, 150, 50);
   fill(0, 0, 0);
@@ -402,6 +409,8 @@ void draw() {
   text(("Lives: "+lives), 10, 20);
   text(("$"+money), 10, 40);
   text(("Round: "+round), 75, 20);
+  
+  //10 different rounds
   if (!done && round == 1) {
     if (lives > 0 && size < 5) { //limit to # of enemies on board at once
       spawn();
@@ -496,7 +505,7 @@ void draw() {
   }
 
 
-
+  //remove any dead enemies, get money
   for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
     if (enemies.get(i).isAlive == false) {
       enemies.remove(i);
@@ -508,7 +517,7 @@ void draw() {
 
   for (Enemy e : enemies) {
     e.display();
-    
+    //shoot from dart towers if in range
     for (PVector p : dartPositions) {
       enemyPos = new PVector(e.x, e.y);
       if (p.dist(enemyPos) < 200) {
@@ -518,6 +527,7 @@ void draw() {
         }
       }
     }
+    //if in range of tack tower, tack tower shoots in 8 directions
     for (PVector p : tackPositions) {
       enemyPos = new PVector(e.x, e.y);
       if (p.dist(enemyPos) < 100) {
@@ -533,6 +543,7 @@ void draw() {
         }
       }
     }
+    //if in range of ice tower, when ice tower shoots then they turn blue
     for (PVector p : icePositions) {
       enemyPos = new PVector(e.x, e.y);
       if (p.dist(enemyPos) < 100) {
@@ -542,6 +553,7 @@ void draw() {
         }
       }
     }
+    //if dart hits an enemy kill enemy
     for (int i = 0; i < darts.size(); i++) {
       if (darts.get(i).Pos.dist(enemyPos) < 12) {
         darts.remove(i);
@@ -549,11 +561,12 @@ void draw() {
       }
     }
 
-    if (e.col == color(255, 0, 0)) e.move();
+    if (e.col == color(255, 0, 0)) e.move(); //pnly move when red (freeze when blue)
     j++;
   }
   println(enemies.size());
 
+  // darts move
   Iterator<Dart> D = darts.iterator();
   //for (int i = 0; i < darts.size(); i++) {
   //  if (darts.get(i).Pos.x < 0 || darts.get(i).Pos.x > 900 || darts.get(i).Pos.y > 600 || darts.get(i).Pos.y < 0 ) {
@@ -565,6 +578,8 @@ void draw() {
   for (Dart d : darts) {
     d.update();
   }
+  
+  //check to see if dart is out of range
   while (D.hasNext()) {
     Dart dd = D.next();
     if (dd.towerType == 0 && dd.distTraveled > 300) {
@@ -583,6 +598,6 @@ void draw() {
   //    en = en + 1;
   //  }
   //}
-  fill(0,0,255);
-  rect(450,350,150,100);
+  //fill(0,0,255);
+  //rect(450,350,150,100);
 }
