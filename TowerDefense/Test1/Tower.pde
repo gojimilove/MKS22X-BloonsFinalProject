@@ -37,6 +37,7 @@ class DartTower extends Tower {
     super(x, y);
     img = loadImage("Dart_Monkey.png");
     range = 300;
+    value = 100;
   }
 
   void display() {
@@ -72,6 +73,7 @@ class TackTower extends Tower {
     super(x, y);
     img = loadImage("Tack_Shooter.png");
     range = 200;
+    value = 200;
   }
 
   void display() {
@@ -107,6 +109,7 @@ class IceTower extends Tower {
     super(x, y);
     img = loadImage("Ice_Tower.png");
     range = 200;
+    value = 300;
   }
 
   void display() {
