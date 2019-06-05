@@ -231,8 +231,8 @@ void mouseClicked() {
   }
 }
 
-void shoot(float x1, float y1, float x2, float y2) {
-  Dart d = new Dart(x1, y1, x2, y2, 0);
+void shoot(float x1, float y1, float x2, float y2, int type) {
+  Dart d = new Dart(x1, y1, x2, y2, 0, type);
   darts.add(d);
 
   //println(d);
@@ -342,14 +342,14 @@ void draw() {
     if (enemies.get(i).isAlive == false) enemies.remove(i);
   } 
   //enemyPos = new PVector(enemies.get(0).x, enemies.get(0).y);    }
-
+  int j = 0;
   for (Enemy e : enemies) {
     e.display();
     enemyPos = new PVector(e.x, e.y);
     for (PVector p : dartPositions) {
       if (p.dist(enemyPos) < 200) {
         if (frameCount % 60 == 0) {
-          shoot(p.x, p.y, enemyPos.x, enemyPos.y);
+          shoot(p.x, p.y, enemyPos.x, enemyPos.y, 0);
           //println(":" + dartPositions.size());
         }
       }
@@ -357,14 +357,14 @@ void draw() {
     for (PVector p : tackPositions) {
       if (p.dist(enemyPos) < 100) {
         if (frameCount % 60 == 0) {
-          shoot(p.x, p.y, p.x, p.y+50);
-          shoot(p.x, p.y, p.x+25, p.y+25);
-          shoot(p.x, p.y, p.x+50, p.y);
-          shoot(p.x, p.y, p.x+25, p.y-25);
-          shoot(p.x, p.y, p.x, p.y-50);
-          shoot(p.x, p.y, p.x-25, p.y-25);
-          shoot(p.x, p.y, p.x-50, p.y);
-          shoot(p.x, p.y, p.x-25, p.y+25);
+          shoot(p.x, p.y, p.x, p.y+50, 1);
+          shoot(p.x, p.y, p.x+25, p.y+25, 1);
+          shoot(p.x, p.y, p.x+50, p.y, 1);
+          shoot(p.x, p.y, p.x+25, p.y-25, 1);
+          shoot(p.x, p.y, p.x, p.y-50, 1);
+          shoot(p.x, p.y, p.x-25, p.y-25, 1);
+          shoot(p.x, p.y, p.x-50, p.y, 1);
+          shoot(p.x, p.y, p.x-25, p.y+25, 1);
         }
       }
     }
@@ -376,7 +376,15 @@ void draw() {
         }
       }
     }
+    for (int i = 0; i < darts.size(); i++) {
+      if (darts.get(i).Pos.dist(enemyPos) < 10) {
+        darts.remove(i);
+        enemies.get(j).isAlive = false;
+      }
+    }
+        
     if (e.col == color(255, 0, 0)) e.move();
+    j++;
   }
   Iterator<Dart> D = darts.iterator();
   for (int i = 0; i < darts.size(); i++) {
@@ -391,18 +399,20 @@ void draw() {
   }
   while (D.hasNext()) {
     Dart dd = D.next();
-    if (dd.distTraveled > 250) {
+    if (dd.towerType == 0 && dd.distTraveled > 200) {
+      D.remove();
+    } else if (dd.towerType == 1 && dd.distTraveled > 100) {
       D.remove();
     }
   }
 
-  int en = 0;
-  for (int i = 0; i < darts.size(); i++) {
-    if (darts.get(i).Pos.dist(enemyPos) < 5 && en < enemies.size()) {
-      //println(enemies.size());
-      enemies.get(en).isAlive = false;
-      darts.remove(i);
-      en = en + 1;
-    }
-  }
+  //int en = 0;
+  //for (int i = 0; i < darts.size(); i++) {
+  //  if (darts.get(i).Pos.dist(enemyPos) < 5 && en < enemies.size()) {
+  //    //println(enemies.size());
+  //    enemies.get(en).isAlive = false;
+  //    darts.remove(i);
+  //    en = en + 1;
+  //  }
+  //}
 }
