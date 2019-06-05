@@ -182,8 +182,8 @@ void mouseClicked() {
       mode = 2;
     } else if (mouseX >= 920 && mouseX < 970 && mouseY >= 190 && mouseY < 240) {
       mode = 3;
-    //} else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
-    //  mode = 4;
+      //} else if (mouseX >= 920 && mouseX < 970 && mouseY >= 250 && mouseY < 300) {
+      //  mode = 4;
     } else if (mouseX >= 950 && mouseX < 1050 && mouseY >= 450 && mouseY < 550) {
       mode = 5;
     }
@@ -261,7 +261,7 @@ void draw() {
   if (mode == 2) rect(920, 130, 50, 50);
   if (mode == 3) rect(920, 190, 50, 50);
   //if (mode == 4) rect(920, 250, 50, 50);
-  if (mode == 5) rect(950,450,100,100);
+  if (mode == 5) rect(950, 450, 100, 100);
   stroke(0);
   tow.display();
   image(loadImage("Go.png"), 950, 450, 100, 100);
@@ -292,31 +292,60 @@ void draw() {
   //  t.display(test.getBoard());
   //}
   fill(255);
-  rect(0,0,150,50);
+  rect(0, 0, 150, 50);
   fill(0, 0, 0);
   textSize(12);
   text(("Lives: "+lives), 10, 20);
-   text(("$"+money), 10, 40);
+  text(("$"+money), 10, 40);
   text(("Round: "+round), 75, 20);
   if (!done && round == 1) {
     if (lives > 0 && size < 5) { //limit to # of enemies on board at once
-          spawn();
-    }
-    if (size >= 5 && round == 1) {
-    done = true;
-    print(size);
-    size = 0;
-  }
-  }
-  
-  if (round  == 2 && done ) {
-    if (lives > 0 && enemies.size() < 8) { //limit to # of enemies on board at once
       spawn();
     }
+    if (size >= 5 && round == 1) {
+      done = true;
+      print(size);
+      size = 0;
+    }
   }
-  if (enemies.size() == 8 && round == 2) {
-    done = false;
+
+  if (round  == 2 && done ) {
+    if (lives > 0 && size < 8) { //limit to # of enemies on board at once
+      spawn();
+    }
+    if (size == 8 && round == 2) {
+      done = false;
+      size = 0;
+    }
   }
+  if (!done && round  == 3 ) {
+    if (lives > 0 && size < 14) { //limit to # of enemies on board at once
+      spawn();
+    }
+    if (size == 14 && round == 3) {
+      done = true;
+      size = 0;
+    }
+  }
+  if (round  == 4 && done ) {
+    if (lives > 0 && size < 20) { //limit to # of enemies on board at once
+      spawn();
+    }
+    if (size == 20 && round == 4) {
+      done = false;
+      size = 0;
+    }
+  }
+  if (round  == 5 && !done ) {
+    if (lives > 0 && size < 30) { //limit to # of enemies on board at once
+      spawn();
+    }
+    if (size == 30 && round == 5) {
+      done = true;
+      size = 0;
+    }
+  }
+
 
 
   for (int i = 0; i < enemies.size(); i++) { //if enemy reaches end, remove it
@@ -329,7 +358,7 @@ void draw() {
     enemyPos = new PVector(e.x, e.y);
     for (PVector p : dartPositions) {
       if (p.dist(enemyPos) < 200) {
-        if (frameCount % 60 == 0) {
+        if (frameCount % 80 == 0) {
           shoot(p.x, p.y, enemyPos.x, enemyPos.y, 0);
           //println(":" + dartPositions.size());
         }
@@ -369,12 +398,12 @@ void draw() {
     j++;
   }
   Iterator<Dart> D = darts.iterator();
-  for (int i = 0; i < darts.size(); i++) {
-    if (darts.get(i).Pos.x < 0 || darts.get(i).Pos.x > 900 || darts.get(i).Pos.y > 600 || darts.get(i).Pos.y < 0 ) {
-      darts.remove(i);
-      println("darts:" + darts.size());
-    }
-  }
+  //for (int i = 0; i < darts.size(); i++) {
+  //  if (darts.get(i).Pos.x < 0 || darts.get(i).Pos.x > 900 || darts.get(i).Pos.y > 600 || darts.get(i).Pos.y < 0 ) {
+  //    darts.remove(i);
+  //    println("darts:" + darts.size());
+  //  }
+  //}
 
   for (Dart d : darts) {
     d.update();
