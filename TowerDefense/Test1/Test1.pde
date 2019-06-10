@@ -139,14 +139,12 @@ class Map implements Displayable {
 int s = 0;
 void spawn() {
   //int s = millis()%100; //counts up to 100 and starts over
-  if (round <= 5) {
-    s = s + 3;
-    if (s % 60 == 0) { //if divisible by 100, add an enemy to the list
-      Enemy e = new Enemy(25, 125, test.getPath(), 2, color(255, 0, 0), num);
-      enemies.add(e);
-      size = size + 1;
-      num = num + 1;
-    }
+  s = s + 3;
+  if (s % 60 == 0) { //if divisible by 100, add an enemy to the list
+    Enemy e = new Enemy(25, 125, test.getPath(), 2, color(255, 0, 0), num);
+    enemies.add(e);
+    size = size + 1;
+    num = num + 1;
   }
 }
 Enemy getSmall(ArrayList<Enemy> r) {
